@@ -1,4 +1,6 @@
-package domain;
+package com.zeitoun.codevault.menu;
+import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
+
 import java.util.List;
 
 public class Folder {
