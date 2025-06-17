@@ -27,6 +27,15 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.49.1.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/eu.mihosoft.monacofx/monacofx -->
+        <dependency>
+            <groupId>eu.mihosoft.monacofx</groupId>
+            <artifactId>monacofx</artifactId>
+            <version>0.0.8</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>
