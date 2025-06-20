@@ -24,13 +24,15 @@ public class CreateCodeSnippetInteractor {
         return createCodeSnippetOutputBoundary;
     }
 
-    public void execute(CreateCodeSnippetInputData  newSnippet) {
-        String result = this.repository.saveSnippet(newSnippet.getCode(), newSnippet.getName(), newSnippet.getDescription(), newSnippet.getLanguage());
-        if(result.equals("success")) {
-            this.createCodeSnippetOutputBoundary.SwitchToHomeView();
+    public void execute(CreateCodeSnippetInputData newSnippet) {
+        if(newSnippet.getName().isEmpty()) {
+          this.createCodeSnippetOutputBoundary.showErrorMessage("Empty code snippet name is not allowed.");
+        } else if (newSnippet.getLanguage().isEmpty()) {
+            this.createCodeSnippetOutputBoundary.showErrorMessage("Language is missing.");
+        } else if (repository.isMember(newSnippet.getName(), newSnippet.getLanguage())) {
+            this.createCodeSnippetOutputBoundary.showErrorMessage("A code snippet with that name and language already exists.");
         } else {
-            this.createCodeSnippetOutputBoundary.showErrorMessage(result);
+            this.repository.saveSnippet(newSnippet.getCode(), newSnippet.getName(), newSnippet.getDescription(), newSnippet.getLanguage());
         }
-
     }
 }

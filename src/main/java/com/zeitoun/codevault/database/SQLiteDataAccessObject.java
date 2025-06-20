@@ -19,20 +19,34 @@ public class SQLiteDataAccessObject implements SnippetRepository {
     }
 
     @Override
-    public String saveSnippet(String code, String name, String description, String language) {
+    public Void saveSnippet(String code, String name, String description, String language) {
        String query = "INSERT INTO " + table + " VALUES(?, ?, ?, ?);";
-
         try(PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setString(1, code);
             statement.setString(2, name);
             statement.setString(3, description);
             statement.setString(4, language);
             statement.executeUpdate();
-            return "success";
         } catch (SQLException e) {
-            return e.getMessage();
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean isMember(String name, String language) {
+        String query = "SELECT * FROM " + table + " WHERE name=? AND language=?";
+
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, name);
+            statement.setString(2, language);
+            ResultSet result = statement.executeQuery();
+            return result.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+
 
     public void createTable() {
         String query = "CREATE TABLE IF NOT EXISTS " + table + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), PRIMARY KEY(name, language));" ;
@@ -40,7 +54,7 @@ public class SQLiteDataAccessObject implements SnippetRepository {
         try(PreparedStatement statement = connection.prepareStatement(query);) {
             statement.executeUpdate();
         } catch(SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

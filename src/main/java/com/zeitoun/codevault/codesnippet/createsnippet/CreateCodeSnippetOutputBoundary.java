@@ -6,4 +6,5 @@ package com.zeitoun.codevault.codesnippet.createsnippet;
 public interface CreateCodeSnippetOutputBoundary {
     void SwitchToHomeView();
     void showErrorMessage(String error);
+    void showReplaceConfirmation(String message);
 }

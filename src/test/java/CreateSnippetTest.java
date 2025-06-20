@@ -46,6 +46,11 @@ public class CreateSnippetTest {
             public void showErrorMessage(String error) {
                 fail("Use case showErrorMessage is unexpected.");
             }
+
+            @Override
+            public void showReplaceConfirmation(String message) {
+                fail("Use case replaceConfirmation is unexpected.");
+            }
         };
 
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);

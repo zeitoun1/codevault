@@ -15,27 +15,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        SnippetRepository snippetRepository = new SnippetRepository() {
-            @Override
-            public String saveSnippet(String code, String name, String description, String language) {
-                return "";
-            }
-        };
-        CreateCodeSnippetOutputBoundary outputBoundary = new CreateCodeSnippetOutputBoundary() {
-            @Override
-            public void SwitchToHomeView() {
 
-            }
-
-            @Override
-            public void showErrorMessage(String error) {
-
-            }
-        };
-        CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(snippetRepository, outputBoundary);
-        CreateCodeSnippetController controller = new CreateCodeSnippetController(createCodeSnippetInteractor);
-        CreateCodeSnippetView view = new CreateCodeSnippetView(controller);
-        primaryStage.setScene(view.getScene());
         primaryStage.setTitle("Code Vault");
         primaryStage.show();
     }

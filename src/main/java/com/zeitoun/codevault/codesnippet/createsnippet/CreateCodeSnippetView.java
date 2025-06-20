@@ -1,14 +1,16 @@
 package com.zeitoun.codevault.codesnippet.createsnippet;
 
 import eu.mihosoft.monacofx.MonacoFX;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 
@@ -24,17 +26,26 @@ public class CreateCodeSnippetView {
     private TextArea descriptionBox;
     private Button saveButton;
     private CreateCodeSnippetController controller;
+    private CreateCodeSnippetViewModel viewModel;
 
 
-    public CreateCodeSnippetView(CreateCodeSnippetController controller) {
+    public CreateCodeSnippetView(CreateCodeSnippetController controller, CreateCodeSnippetViewModel viewModel) {
+
+        // Creating a Background
+        Color darkMode = Color.rgb(20, 20, 20);
+        BackgroundFill darkBackgroundFill = new BackgroundFill(darkMode, CornerRadii.EMPTY, Insets.EMPTY);
+        Background darkBackground = new Background(darkBackgroundFill);
 
         this.controller = controller;
+        this.viewModel = viewModel;
+
 
         // initializing child nodes
         this.nameBox = new TextField();
         nameBox.setPrefWidth(1000);
         nameBox.setPromptText("Snippet name");
         nameBox.setFont(new Font(20));
+        nameBox.setBackground(darkBackground);
 
         this.languageBox = new ComboBox<>();
 
@@ -44,20 +55,24 @@ public class CreateCodeSnippetView {
         this.descriptionBox = new TextArea();
         descriptionBox.setPromptText("Description");
         descriptionBox.setFont(new Font(18));
-        HBox.setHgrow(descriptionBox, Priority.ALWAYS);
+        descriptionBox.setBackground(darkBackground);
 
         this.saveButton = new Button("Save");
         saveButton.setFont(new Font(18.0));
+
 
         // initializing parent nodes and scene
         AnchorPane.setRightAnchor(languageBox, 20.0);
         AnchorPane.setTopAnchor(languageBox, 2.0);
         this.topNode = new AnchorPane(this.nameBox, this.languageBox);
+        topNode.setBackground(darkBackground);
 
-        this.bottomNode = new HBox(this.descriptionBox, this.saveButton);
 
         this.stackPane = new StackPane(this.editorNode);
         VBox.setVgrow(stackPane, Priority.ALWAYS);
+
+        this.bottomNode = new HBox(this.descriptionBox, this.saveButton);
+        bottomNode.setBackground(darkBackground);
 
         this.root = new VBox(this.topNode, this.stackPane, this.bottomNode);
         this.scene = new Scene(root);
@@ -69,6 +84,17 @@ public class CreateCodeSnippetView {
                 controller.execute(editorNode.getEditor().getDocument().getText(), nameBox.getText(), descriptionBox.getText(), editorNode.getEditor().getCurrentLanguage());
             }
         });
+
+        // Add listeners (Dialog boxes) to the errorMessage and confirmationMessage properties
+        viewModel.errorMessage.addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                Alert errorDialog = new Alert(Alert.AlertType.ERROR);
+                errorDialog.setTitle("");
+            }
+        });
+
+
 
     }
 
