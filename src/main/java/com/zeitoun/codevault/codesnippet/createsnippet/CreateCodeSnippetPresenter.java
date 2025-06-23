@@ -8,18 +8,13 @@ public class CreateCodeSnippetPresenter implements CreateCodeSnippetOutputBounda
     }
 
     @Override
-    public void SwitchToHomeView() {
-
+    public void showSuccessMessage(String success) {
+        createCodeSnippetViewModel.successMessage.setValue(success);
     }
 
     @Override
     public void showErrorMessage(String error) {
         createCodeSnippetViewModel.errorMessage.setValue(error);
-    }
-
-    @Override
-    public void showReplaceConfirmation(String message) {
-        createCodeSnippetViewModel.ConfirmationMessage.setValue(message);
     }
 
     public CreateCodeSnippetViewModel getCreateCodeSnippetViewModel() {

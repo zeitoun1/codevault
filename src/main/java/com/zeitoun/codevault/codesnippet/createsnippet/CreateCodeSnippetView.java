@@ -1,5 +1,6 @@
 package com.zeitoun.codevault.codesnippet.createsnippet;
 
+import com.zeitoun.codevault.ToastNotification;
 import eu.mihosoft.monacofx.MonacoFX;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -10,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 
@@ -27,6 +27,7 @@ public class CreateCodeSnippetView {
     private Button saveButton;
     private CreateCodeSnippetController controller;
     private CreateCodeSnippetViewModel viewModel;
+    private ToastNotification toastNotification;
 
 
     public CreateCodeSnippetView(CreateCodeSnippetController controller, CreateCodeSnippetViewModel viewModel) {
@@ -47,10 +48,18 @@ public class CreateCodeSnippetView {
         nameBox.setFont(new Font(20));
         nameBox.setBackground(darkBackground);
 
-        this.languageBox = new ComboBox<>();
+        this.languageBox = new ComboBox<>(viewModel.editorLanguages);
 
         this.editorNode = new MonacoFX();
         editorNode.getEditor().setCurrentTheme("vs-dark");
+
+        languageBox.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                editorNode.getEditor().setCurrentLanguage(languageBox.getValue());
+            }
+        });
+
 
         this.descriptionBox = new TextArea();
         descriptionBox.setPromptText("Description");
@@ -71,6 +80,9 @@ public class CreateCodeSnippetView {
         this.stackPane = new StackPane(this.editorNode);
         VBox.setVgrow(stackPane, Priority.ALWAYS);
 
+        this.toastNotification = new ToastNotification(stackPane);
+        toastNotification.setVisible(false);
+
         this.bottomNode = new HBox(this.descriptionBox, this.saveButton);
         bottomNode.setBackground(darkBackground);
 
@@ -78,23 +90,34 @@ public class CreateCodeSnippetView {
         this.scene = new Scene(root);
         editorNode.requestFocus();
 
+
+
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                controller.execute(editorNode.getEditor().getDocument().getText(), nameBox.getText(), descriptionBox.getText(), editorNode.getEditor().getCurrentLanguage());
+                controller.execute(editorNode.getEditor().getDocument().getText(), nameBox.getText(), descriptionBox.getText(), languageBox.getValue());
             }
         });
 
-        // Add listeners (Dialog boxes) to the errorMessage and confirmationMessage properties
+        // Add listeners (Dialog boxes) to the errorMessage property
         viewModel.errorMessage.addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 Alert errorDialog = new Alert(Alert.AlertType.ERROR);
-                errorDialog.setTitle("");
+                errorDialog.setTitle("Error");
+                errorDialog.setContentText(viewModel.errorMessage.getValue());
+                errorDialog.showAndWait();
             }
         });
 
-
+        // Add listeners (Toast Notification) to the successMessage property
+        viewModel.successMessage.addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                toastNotification.setText(viewModel.successMessage.getValue());
+                toastNotification.showAndHide(2000);
+            }
+        });
 
     }
 
@@ -102,8 +125,5 @@ public class CreateCodeSnippetView {
         return scene;
     }
 
-    public MonacoFX getEditorNode() {
-        return editorNode;
-    }
 
 }

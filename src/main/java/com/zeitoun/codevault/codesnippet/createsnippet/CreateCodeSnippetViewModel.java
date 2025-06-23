@@ -3,19 +3,20 @@ package com.zeitoun.codevault.codesnippet.createsnippet;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
 public class CreateCodeSnippetViewModel {
-    List<String> editorLanguages;
+    ObservableList<String> editorLanguages;
+    StringProperty successMessage;
     StringProperty errorMessage;
-    StringProperty ConfirmationMessage;
 
 
-    public CreateCodeSnippetViewModel(List<String> editorLanguages) {
+    public CreateCodeSnippetViewModel(ObservableList<String> editorLanguages) {
         this.editorLanguages = editorLanguages;
         this.errorMessage = new SimpleStringProperty();
-        this.ConfirmationMessage = new SimpleStringProperty();
+        this.successMessage = new SimpleStringProperty();
     }
 
     public List<String> getEditorLanguages() {
@@ -23,6 +24,6 @@ public class CreateCodeSnippetViewModel {
     }
 
     public void setEditorLanguages(List<String> editorLanguages) {
-        this.editorLanguages = editorLanguages;
+        this.editorLanguages.setAll(editorLanguages);
     }
 }

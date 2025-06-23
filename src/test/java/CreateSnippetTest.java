@@ -29,8 +29,9 @@ public class CreateSnippetTest {
 
 
         CreateCodeSnippetOutputBoundary createCodeSnippetOutputBoundary = new CreateCodeSnippetOutputBoundary() {
+
             @Override
-            public void SwitchToHomeView() {
+            public void showSuccessMessage(String success) {
                 String query = "SELECT * FROM test WHERE language = 'python' AND name = 'empty code snippet'";
                 try(PreparedStatement statement = connection.prepareStatement(query);){
                     ResultSet result = statement.executeQuery();
@@ -47,10 +48,6 @@ public class CreateSnippetTest {
                 fail("Use case showErrorMessage is unexpected.");
             }
 
-            @Override
-            public void showReplaceConfirmation(String message) {
-                fail("Use case replaceConfirmation is unexpected.");
-            }
         };
 
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);
