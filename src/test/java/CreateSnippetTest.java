@@ -1,6 +1,6 @@
-import com.zeitoun.codevault.codesnippet.createsnippet.CreateCodeSnippetInputData;
-import com.zeitoun.codevault.codesnippet.createsnippet.CreateCodeSnippetInteractor;
-import com.zeitoun.codevault.codesnippet.createsnippet.CreateCodeSnippetOutputBoundary;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInputData;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInteractor;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetOutputBoundary;
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
 
@@ -9,7 +9,6 @@ import java.sql.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class CreateSnippetTest {

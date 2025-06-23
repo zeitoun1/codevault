@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.createsnippet;
+package com.zeitoun.codevault.codesnippet.createsnippet.usecase;
 
 /**
  * Output Boundary for the CreateCodeSnippet use case.

@@ -1,6 +1,8 @@
-package com.zeitoun.codevault.codesnippet.createsnippet;
+package com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter;
 
-public class CreateCodeSnippetPresenter implements CreateCodeSnippetOutputBoundary{
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetOutputBoundary;
+
+public class CreateCodeSnippetPresenter implements CreateCodeSnippetOutputBoundary {
     private CreateCodeSnippetViewModel createCodeSnippetViewModel;
 
     public CreateCodeSnippetPresenter(CreateCodeSnippetViewModel createCodeSnippetViewModel) {

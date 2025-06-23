@@ -1,17 +1,17 @@
 package com.zeitoun.codevault.app;
 
-import com.zeitoun.codevault.codesnippet.createsnippet.*;
-import com.zeitoun.codevault.codesnippet.dataaccess.SnippetRepository;
+import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetPresenter;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetController;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInteractor;
+import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetView;
+import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetViewModel;
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
-import javafx.collections.ObservableList;
 
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.Arrays;
 

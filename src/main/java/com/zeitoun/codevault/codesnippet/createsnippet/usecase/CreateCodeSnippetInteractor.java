@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.createsnippet;
+package com.zeitoun.codevault.codesnippet.createsnippet.usecase;
 
 import com.zeitoun.codevault.codesnippet.dataaccess.SnippetRepository;
 

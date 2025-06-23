@@ -1,6 +1,8 @@
-package com.zeitoun.codevault.codesnippet.createsnippet;
+package com.zeitoun.codevault.codesnippet.createsnippet.view;
 
 import com.zeitoun.codevault.ToastNotification;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetController;
+import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetViewModel;
 import eu.mihosoft.monacofx.MonacoFX;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -48,7 +50,7 @@ public class CreateCodeSnippetView {
         nameBox.setFont(new Font(20));
         nameBox.setBackground(darkBackground);
 
-        this.languageBox = new ComboBox<>(viewModel.editorLanguages);
+        this.languageBox = new ComboBox<>(viewModel.getEditorLanguages());
 
         this.editorNode = new MonacoFX();
         editorNode.getEditor().setCurrentTheme("vs-dark");
@@ -100,21 +102,21 @@ public class CreateCodeSnippetView {
         });
 
         // Add listeners (Dialog boxes) to the errorMessage property
-        viewModel.errorMessage.addListener(new InvalidationListener() {
+        viewModel.errorMessageProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 Alert errorDialog = new Alert(Alert.AlertType.ERROR);
                 errorDialog.setTitle("Error");
-                errorDialog.setContentText(viewModel.errorMessage.getValue());
+                errorDialog.setContentText(viewModel.getErrorMessage());
                 errorDialog.showAndWait();
             }
         });
 
         // Add listeners (Toast Notification) to the successMessage property
-        viewModel.successMessage.addListener(new InvalidationListener() {
+        viewModel.successMessageProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
-                toastNotification.setText(viewModel.successMessage.getValue());
+                toastNotification.setText(viewModel.getSuccessMessage());
                 toastNotification.showAndHide(2000);
             }
         });
