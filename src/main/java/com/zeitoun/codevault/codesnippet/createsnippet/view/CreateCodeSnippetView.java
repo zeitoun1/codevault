@@ -17,12 +17,14 @@ import javafx.scene.text.Font;
 
 
 public class CreateCodeSnippetView {
-    private final Scene scene;
     private VBox root;
     private AnchorPane topNode;
     private TextField nameBox;
     private ComboBox<String> languageBox;
     private StackPane stackPane;
+
+
+
     private MonacoFX editorNode;
     private HBox bottomNode;
     private TextArea descriptionBox;
@@ -34,10 +36,6 @@ public class CreateCodeSnippetView {
 
     public CreateCodeSnippetView(CreateCodeSnippetController controller, CreateCodeSnippetViewModel viewModel) {
 
-        // Creating a Background
-        Color darkMode = Color.rgb(20, 20, 20);
-        BackgroundFill darkBackgroundFill = new BackgroundFill(darkMode, CornerRadii.EMPTY, Insets.EMPTY);
-        Background darkBackground = new Background(darkBackgroundFill);
 
         this.controller = controller;
         this.viewModel = viewModel;
@@ -48,7 +46,7 @@ public class CreateCodeSnippetView {
         nameBox.setPrefWidth(1000);
         nameBox.setPromptText("Snippet name");
         nameBox.setFont(new Font(20));
-        nameBox.setBackground(darkBackground);
+
 
         this.languageBox = new ComboBox<>(viewModel.getEditorLanguages());
 
@@ -66,7 +64,7 @@ public class CreateCodeSnippetView {
         this.descriptionBox = new TextArea();
         descriptionBox.setPromptText("Description");
         descriptionBox.setFont(new Font(18));
-        descriptionBox.setBackground(darkBackground);
+
 
         this.saveButton = new Button("Save");
         saveButton.setFont(new Font(18.0));
@@ -76,7 +74,7 @@ public class CreateCodeSnippetView {
         AnchorPane.setRightAnchor(languageBox, 20.0);
         AnchorPane.setTopAnchor(languageBox, 2.0);
         this.topNode = new AnchorPane(this.nameBox, this.languageBox);
-        topNode.setBackground(darkBackground);
+
 
 
         this.stackPane = new StackPane(this.editorNode);
@@ -86,11 +84,10 @@ public class CreateCodeSnippetView {
         toastNotification.setVisible(false);
 
         this.bottomNode = new HBox(this.descriptionBox, this.saveButton);
-        bottomNode.setBackground(darkBackground);
+
 
         this.root = new VBox(this.topNode, this.stackPane, this.bottomNode);
-        this.scene = new Scene(root);
-        editorNode.requestFocus();
+
 
 
 
@@ -123,9 +120,13 @@ public class CreateCodeSnippetView {
 
     }
 
-    public Scene getScene() {
-        return scene;
+
+    public VBox getRoot() {
+        return root;
     }
 
+    public MonacoFX getEditorNode() {
+        return editorNode;
+    }
 
 }

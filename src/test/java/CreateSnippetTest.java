@@ -23,8 +23,8 @@ public class CreateSnippetTest {
 
         SQLiteConnectionManager sqLiteConnectionManager = new SQLiteConnectionManager();
         this.connection = sqLiteConnectionManager.setConnection(jdbcURL);
-        SQLiteDataAccessObject sqLiteDataAccessObject = new SQLiteDataAccessObject(connection, "test");
-        sqLiteDataAccessObject.createTable();
+        SQLiteDataAccessObject sqLiteDataAccessObject = new SQLiteDataAccessObject(connection, "snippetsTest", "foldersTest");
+        sqLiteDataAccessObject.createSnippetsTable();
 
 
         CreateCodeSnippetOutputBoundary createCodeSnippetOutputBoundary = new CreateCodeSnippetOutputBoundary() {
