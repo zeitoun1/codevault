@@ -17,6 +17,6 @@ public class CreateFolderPresenter implements CreateFolderOutputBoundary{
 
     @Override
     public void showErrorMessage(String error) {
-
+        foldersPaneViewModel.setError(error);
     }
 }
