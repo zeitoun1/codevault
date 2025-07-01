@@ -1,6 +1,7 @@
 package com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter;
 
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetOutputBoundary;
+import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetViewModel;
 
 public class CreateCodeSnippetPresenter implements CreateCodeSnippetOutputBoundary {
     private CreateCodeSnippetViewModel createCodeSnippetViewModel;
@@ -11,12 +12,12 @@ public class CreateCodeSnippetPresenter implements CreateCodeSnippetOutputBounda
 
     @Override
     public void showSuccessMessage(String success) {
-        createCodeSnippetViewModel.successMessage.setValue(success);
+        createCodeSnippetViewModel.setSuccessMessage(success);
     }
 
     @Override
     public void showErrorMessage(String error) {
-        createCodeSnippetViewModel.errorMessage.setValue(error);
+        createCodeSnippetViewModel.setErrorMessage(error);
     }
 
     public CreateCodeSnippetViewModel getCreateCodeSnippetViewModel() {

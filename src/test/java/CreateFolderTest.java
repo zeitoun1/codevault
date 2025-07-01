@@ -2,9 +2,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
-import com.zeitoun.codevault.folderspane.createfolder.CreateFolderInteractor;
-import com.zeitoun.codevault.folderspane.createfolder.CreateFolderOutputBoundary;
-import org.junit.jupiter.api.AfterAll;
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderInteractor;
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderOutputBoundary;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 

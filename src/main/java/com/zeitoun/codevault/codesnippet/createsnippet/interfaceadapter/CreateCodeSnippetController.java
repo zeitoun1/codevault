@@ -1,4 +1,7 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.usecase;
+package com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter;
+
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInputData;
+import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInteractor;
 
 public class CreateCodeSnippetController {
     private final CreateCodeSnippetInteractor createCodeSnippetInteractor;

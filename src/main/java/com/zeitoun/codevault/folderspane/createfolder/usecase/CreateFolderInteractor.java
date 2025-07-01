@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.folderspane.createfolder;
+package com.zeitoun.codevault.folderspane.createfolder.usecase;
 
 import com.zeitoun.codevault.folderspane.dataaccess.FoldersRepository;
 

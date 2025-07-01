@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter;
+package com.zeitoun.codevault.codesnippet.createsnippet.view;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -40,5 +40,13 @@ public class CreateCodeSnippetViewModel {
 
     public StringProperty successMessageProperty() {
         return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage.setValue(successMessage);
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage.setValue(errorMessage);
     }
 }

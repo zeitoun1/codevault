@@ -1,8 +1,9 @@
-package com.zeitoun.codevault.folderspane.createfolder;
+package com.zeitoun.codevault.folderspane.createfolder.interfaceadapter;
 
-import com.zeitoun.codevault.folderspane.interfaceadapter.FoldersPaneViewModel;
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderOutputBoundary;
+import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
 
-public class CreateFolderPresenter implements CreateFolderOutputBoundary{
+public class CreateFolderPresenter implements CreateFolderOutputBoundary {
     private final FoldersPaneViewModel foldersPaneViewModel;
 
     public CreateFolderPresenter(FoldersPaneViewModel foldersPaneViewModel) {

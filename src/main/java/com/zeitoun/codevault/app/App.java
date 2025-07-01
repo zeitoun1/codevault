@@ -1,16 +1,16 @@
 package com.zeitoun.codevault.app;
 
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetPresenter;
-import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetController;
+import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInteractor;
 import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetView;
-import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetViewModel;
+import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetViewModel;
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
-import com.zeitoun.codevault.folderspane.createfolder.CreateFolderController;
-import com.zeitoun.codevault.folderspane.createfolder.CreateFolderInteractor;
-import com.zeitoun.codevault.folderspane.createfolder.CreateFolderPresenter;
-import com.zeitoun.codevault.folderspane.interfaceadapter.FoldersPaneViewModel;
+import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderInteractor;
+import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderPresenter;
+import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
 import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
 import javafx.application.Application;
 import javafx.collections.FXCollections;

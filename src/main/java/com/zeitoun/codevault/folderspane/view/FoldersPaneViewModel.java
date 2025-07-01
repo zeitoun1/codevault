@@ -1,12 +1,9 @@
-package com.zeitoun.codevault.folderspane.interfaceadapter;
+package com.zeitoun.codevault.folderspane.view;
 
-import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.List;
 
 public class FoldersPaneViewModel {
     private final ObservableList<String> folders;

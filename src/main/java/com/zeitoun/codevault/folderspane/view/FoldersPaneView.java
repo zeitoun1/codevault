@@ -1,17 +1,12 @@
 package com.zeitoun.codevault.folderspane.view;
 
-import com.zeitoun.codevault.folderspane.createfolder.CreateFolderController;
-import com.zeitoun.codevault.folderspane.interfaceadapter.FoldersPaneViewModel;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
+import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 
 public class FoldersPaneView {

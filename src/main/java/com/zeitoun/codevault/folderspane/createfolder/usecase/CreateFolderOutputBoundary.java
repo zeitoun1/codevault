@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.folderspane.createfolder;
+package com.zeitoun.codevault.folderspane.createfolder.usecase;
 
 public interface CreateFolderOutputBoundary {
     void updateFoldersList(String folder);

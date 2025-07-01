@@ -1,4 +1,6 @@
-package com.zeitoun.codevault.folderspane.createfolder;
+package com.zeitoun.codevault.folderspane.createfolder.interfaceadapter;
+
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderInteractor;
 
 public class CreateFolderController {
     private final CreateFolderInteractor createFolderInteractor;
