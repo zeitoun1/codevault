@@ -31,7 +31,7 @@ public class CreateSnippetTest {
 
             @Override
             public void showSuccessMessage(String success) {
-                String query = "SELECT * FROM test WHERE language = 'python' AND name = 'empty code snippet'";
+                String query = "SELECT * FROM snippetsTest WHERE language = 'python' AND name = 'empty code snippet'";
                 try(PreparedStatement statement = connection.prepareStatement(query);){
                     ResultSet result = statement.executeQuery();
                     // check if the snippet has been saved correctly
@@ -56,10 +56,26 @@ public class CreateSnippetTest {
         createCodeSnippetInteractor.execute(inputData);
     }
 
+    @Test
+    void emptyNameTest() {
+
+    }
+
+    @Test
+    void emptyLanguageTest() {
+
+    }
+
+    @Test
+    void duplicatesTest() {
+
+    }
+
+
     @AfterEach
     public void deleteTestDB() {
         try {
-            String dropTestDB = "DROP TABLE IF EXISTS test";
+            String dropTestDB = "DROP TABLE IF EXISTS snippetsTest";
             Statement statement = connection.createStatement();
             statement.executeUpdate(dropTestDB);
             this.connection.close();

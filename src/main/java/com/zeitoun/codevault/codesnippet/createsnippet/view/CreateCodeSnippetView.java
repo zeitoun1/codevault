@@ -17,27 +17,27 @@ import javafx.scene.text.Font;
 
 
 public class CreateCodeSnippetView {
-    private VBox root;
-    private AnchorPane topNode;
-    private TextField nameBox;
-    private ComboBox<String> languageBox;
-    private StackPane stackPane;
+    private final VBox root;
+    private final AnchorPane topNode;
+    private final TextField nameBox;
+    private final ComboBox<String> languageBox;
+    private final StackPane stackPane;
 
 
 
-    private MonacoFX editorNode;
-    private HBox bottomNode;
-    private TextArea descriptionBox;
-    private Button saveButton;
-    private CreateCodeSnippetController controller;
-    private CreateCodeSnippetViewModel viewModel;
+    private final MonacoFX editorNode;
+    private final HBox bottomNode;
+    private final TextArea descriptionBox;
+    private final Button saveButton;
+
+
+
+    private  CreateCodeSnippetController controller;
+    private final CreateCodeSnippetViewModel viewModel;
     private ToastNotification toastNotification;
 
 
-    public CreateCodeSnippetView(CreateCodeSnippetController controller, CreateCodeSnippetViewModel viewModel) {
-
-
-        this.controller = controller;
+    public CreateCodeSnippetView(CreateCodeSnippetViewModel viewModel) {
         this.viewModel = viewModel;
 
 
@@ -129,4 +129,11 @@ public class CreateCodeSnippetView {
         return editorNode;
     }
 
+    public CreateCodeSnippetController getController() {
+        return controller;
+    }
+
+    public void setController(CreateCodeSnippetController controller) {
+        this.controller = controller;
+    }
 }

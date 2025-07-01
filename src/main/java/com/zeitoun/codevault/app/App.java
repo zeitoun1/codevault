@@ -50,7 +50,8 @@ public class App extends Application {
         FoldersPaneViewModel foldersPaneViewModel = new FoldersPaneViewModel();
 
         // setting up scene
-        CreateCodeSnippetView view = new CreateCodeSnippetView(controller, createCodeSnippetViewModel);
+        CreateCodeSnippetView view = new CreateCodeSnippetView(createCodeSnippetViewModel);
+        view.setController(controller);
         FoldersPaneView foldersPaneView = new FoldersPaneView(foldersPaneViewModel);
         HBox hBox = new HBox(foldersPaneView.getRoot(), view.getRoot());
         HBox.setHgrow(view.getRoot(), Priority.ALWAYS);

@@ -63,7 +63,7 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
 
 
     public void createFoldersTable() {
-        String query = "CREATE TABLE IF NOT EXISTS " + foldersTable + " (folder VARCHAR(30));" ;
+        String query = "CREATE TABLE IF NOT EXISTS " + foldersTable + " (name VARCHAR(30));" ;
         try(PreparedStatement statement = connection.prepareStatement(query);) {
             statement.executeUpdate();
         } catch(SQLException e) {
@@ -86,7 +86,7 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
 
     @Override
     public Boolean isMember(String name) {
-        String query = "SELECT * FROM " + foldersTable + " WHERE folder=?";
+        String query = "SELECT * FROM " + foldersTable + " WHERE name=?";
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, name);
             ResultSet result = statement.executeQuery();
