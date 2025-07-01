@@ -12,7 +12,7 @@ public class CreateFolderPresenter implements CreateFolderOutputBoundary{
 
     @Override
     public void updateFoldersList(String folder) {
-        this.foldersPaneViewModel.getFolders().add(folder);
+        this.foldersPaneViewModel.getFolders().add(0, folder);
     }
 
     @Override

@@ -7,6 +7,9 @@ import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetVie
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetViewModel;
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
+import com.zeitoun.codevault.folderspane.createfolder.CreateFolderController;
+import com.zeitoun.codevault.folderspane.createfolder.CreateFolderInteractor;
+import com.zeitoun.codevault.folderspane.createfolder.CreateFolderPresenter;
 import com.zeitoun.codevault.folderspane.interfaceadapter.FoldersPaneViewModel;
 import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
 import javafx.application.Application;
@@ -39,6 +42,7 @@ public class App extends Application {
         Connection connection = sqLiteConnectionManager.setConnection(jdbcURL);
         SQLiteDataAccessObject sqLiteDataAccessObject = new SQLiteDataAccessObject(connection, "snippetsTest", "foldersTest");
         sqLiteDataAccessObject.createSnippetsTable();
+        sqLiteDataAccessObject.createFoldersTable();
 
 
 
@@ -48,11 +52,16 @@ public class App extends Application {
         CreateCodeSnippetController controller = new CreateCodeSnippetController(interactor);
 
         FoldersPaneViewModel foldersPaneViewModel = new FoldersPaneViewModel();
+        CreateFolderPresenter createFolderPresenter = new CreateFolderPresenter(foldersPaneViewModel);
+        CreateFolderInteractor createFolderInteractor = new CreateFolderInteractor(sqLiteDataAccessObject, createFolderPresenter);
+        CreateFolderController createFolderController = new CreateFolderController(createFolderInteractor);
+
 
         // setting up scene
         CreateCodeSnippetView view = new CreateCodeSnippetView(createCodeSnippetViewModel);
         view.setController(controller);
         FoldersPaneView foldersPaneView = new FoldersPaneView(foldersPaneViewModel);
+        foldersPaneView.setCreateFolderController(createFolderController);
         HBox hBox = new HBox(foldersPaneView.getRoot(), view.getRoot());
         HBox.setHgrow(view.getRoot(), Priority.ALWAYS);
         Scene scene = new Scene(hBox);
