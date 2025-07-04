@@ -1,6 +1,7 @@
 package com.zeitoun.codevault.folderspane.view;
 
 import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
+import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -19,8 +20,9 @@ public class FoldersPaneView {
 
     private final FoldersPaneViewModel foldersPaneViewModel;
 
-    private CreateFolderController createFolderController;
+    private ShowFoldersController showFoldersController;
 
+    private CreateFolderController createFolderController;
     public FoldersPaneView(FoldersPaneViewModel foldersPaneViewModel) {
         this.foldersPaneViewModel = new FoldersPaneViewModel();
         this.addBUtton = new Button("new folder");
@@ -31,7 +33,6 @@ public class FoldersPaneView {
         nameBox.setPromptText("Folder Name");
         nameBox.setVisible(false);
         this.root = new VBox(topBox, nameBox, foldersPane);
-
 
         addBUtton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -63,7 +64,15 @@ public class FoldersPaneView {
         this.createFolderController = createFolderController;
     }
 
+    public void setShowFoldersController(ShowFoldersController showFoldersController) {
+        this.showFoldersController = showFoldersController;
+    }
+
     public FoldersPaneViewModel getFoldersPaneViewModel() {
         return foldersPaneViewModel;
+    }
+
+    public ShowFoldersController getShowFoldersController() {
+        return showFoldersController;
     }
 }

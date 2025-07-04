@@ -3,7 +3,11 @@ package com.zeitoun.codevault.database;
 import com.zeitoun.codevault.codesnippet.dataaccess.SnippetRepository;
 import com.zeitoun.codevault.folderspane.dataaccess.FoldersRepository;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * DataBase access object using SQLite.
@@ -94,6 +98,22 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<String> getFolders() {
+        List<String> result = new ArrayList<>();
+        String query = "SELECT * FROM " + foldersTable;
+        try(Statement statement = connection.createStatement()) {
+            ResultSet folders = statement.executeQuery(query);
+            while (folders.next()) {
+                result.add(folders.getString("name"));
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public Connection getConnection() {

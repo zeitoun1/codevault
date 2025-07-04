@@ -12,11 +12,14 @@ import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFol
 import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderPresenter;
 import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderInteractor;
 import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderOutputBoundary;
+import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersController;
+import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersInteractor;
+import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersOutPutBoundary;
+import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersPresenter;
 import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
 import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -32,6 +35,9 @@ public class AppBuilder {
     private FoldersPaneViewModel foldersPaneViewModel;
     private FoldersPaneView foldersPaneView;
 
+
+    // Building DB parts
+
     public AppBuilder connectToDB(String jdbcURL, String snippetsTable, String FoldersTable) {
         Connection connection = sqLiteConnectionManager.setConnection(jdbcURL);
         sqLiteDataAccessObject = new SQLiteDataAccessObject(connection, snippetsTable, FoldersTable);
@@ -44,6 +50,9 @@ public class AppBuilder {
         sqLiteDataAccessObject.createFoldersTable();
         return this;
     }
+
+
+    // Building Views
 
     public AppBuilder addCreateCodeSnippetView() {
         ObservableList<String> languages = FXCollections.observableArrayList();
@@ -59,6 +68,8 @@ public class AppBuilder {
         foldersPaneView = new FoldersPaneView(foldersPaneViewModel);
         return this;
     }
+
+    // Building UseCases
 
     public AppBuilder addCreateCodeSnippetUseCase() {
         CreateCodeSnippetOutputBoundary createCodeSnippetOutputBoundary = new CreateCodeSnippetPresenter(createCodeSnippetViewModel);
@@ -79,6 +90,30 @@ public class AppBuilder {
         return this;
     }
 
+
+    public AppBuilder addShowFoldersUseCase() {
+        ShowFoldersOutPutBoundary showFoldersOutPutBoundary = new ShowFoldersPresenter(foldersPaneViewModel);
+        ShowFoldersInteractor showFoldersInteractor = new ShowFoldersInteractor(sqLiteDataAccessObject, showFoldersOutPutBoundary);
+
+        ShowFoldersController showFoldersController = new ShowFoldersController(showFoldersInteractor);
+        foldersPaneView.setShowFoldersController(showFoldersController);
+        return this;
+    }
+
+
+
+    // Loading the folders
+
+    public AppBuilder loadFolders() {
+
+        foldersPaneView.getShowFoldersController().execute();
+        return this;
+
+    }
+
+
+
+    // Building the Scene
     public Scene build() {
         HBox root = new HBox(foldersPaneView.getRoot(), createCodeSnippetView.getRoot());
         HBox.setHgrow(createCodeSnippetView.getRoot(), Priority.ALWAYS);
@@ -87,6 +122,7 @@ public class AppBuilder {
         return scene;
 
     }
+
 
 
 
