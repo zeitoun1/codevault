@@ -2,6 +2,8 @@ package com.zeitoun.codevault.folderspane.view;
 
 import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
 import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersController;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -50,6 +52,14 @@ public class FoldersPaneView {
                     nameBox.setVisible(false);
                 }
 
+            }
+        });
+
+        // close nameBox when user removes focus from nameBox
+        nameBox.focusedProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                nameBox.setVisible(nameBox.isFocused());
             }
         });
 
