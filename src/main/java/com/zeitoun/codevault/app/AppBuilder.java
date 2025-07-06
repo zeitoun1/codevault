@@ -18,6 +18,8 @@ import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersOutPutBo
 import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersPresenter;
 import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
 import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
+import com.zeitoun.codevault.snippetspane.SnippetsPaneView;
+import com.zeitoun.codevault.snippetspane.SnippetsPaneViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -39,8 +41,8 @@ public class AppBuilder {
     private CreateCodeSnippetView createCodeSnippetView;
     private FoldersPaneViewModel foldersPaneViewModel;
     private FoldersPaneView foldersPaneView;
-    private CreateCodeSnippetController createCodeSnippetController;
-
+    private SnippetsPaneViewModel snippetsPaneViewModel;
+    private SnippetsPaneView snippetsPaneView;
 
     // Building DB parts
 
@@ -75,13 +77,21 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addSnippetsPaneView() {
+        snippetsPaneViewModel = new SnippetsPaneViewModel();
+        snippetsPaneView = new SnippetsPaneView(snippetsPaneViewModel);
+        return this;
+    }
+
+
+
     // Building UseCases
 
     public AppBuilder addCreateCodeSnippetUseCase() {
         CreateCodeSnippetOutputBoundary createCodeSnippetOutputBoundary = new CreateCodeSnippetPresenter(createCodeSnippetViewModel);
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);
 
-        createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor);
+        CreateCodeSnippetController createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor);
         createCodeSnippetView.setController(createCodeSnippetController);
         return this;
     }
@@ -93,7 +103,7 @@ public class AppBuilder {
 
         CreateFolderController createFolderController = new CreateFolderController(createFolderInteractor);
         foldersPaneView.setCreateFolderController(createFolderController);
-        foldersPaneView.setCreateCodeSnippetController(createCodeSnippetController);
+        foldersPaneView.setCreateCodeSnippetController(createCodeSnippetView.getController());
         return this;
     }
 
@@ -112,7 +122,6 @@ public class AppBuilder {
     // Loading the folders
 
     public AppBuilder loadFolders() {
-
         foldersPaneView.getShowFoldersController().execute();
         return this;
 
@@ -122,7 +131,7 @@ public class AppBuilder {
 
     // Building the Scene
     public Scene build() {
-        HBox root = new HBox(foldersPaneView.getRoot(), createCodeSnippetView.getRoot());
+        HBox root = new HBox(foldersPaneView.getRoot(), snippetsPaneView.getRoot(), createCodeSnippetView.getRoot());
         HBox.setHgrow(createCodeSnippetView.getRoot(), Priority.ALWAYS);
         Scene scene = new Scene(root);
         foldersPaneView.getRoot().prefWidthProperty().bind(scene.widthProperty().multiply(0.1));
