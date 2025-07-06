@@ -5,12 +5,16 @@ public class CreateCodeSnippetInputData {
     private String name;
     private String description;
     private String language;
+    private String folder;
 
-    public CreateCodeSnippetInputData(String code, String name, String description, String language) {
+
+
+    public CreateCodeSnippetInputData(String code, String name, String description, String language, String folder) {
         this.code = code;
         this.name = name;
         this.description = description;
         this.language = language;
+        this.folder = folder;
     }
 
     public String getCode() {
@@ -43,5 +47,13 @@ public class CreateCodeSnippetInputData {
 
     public void setLanguage(String language) {
         this.language = language;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 }

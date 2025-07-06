@@ -85,8 +85,6 @@ public class CreateCodeSnippetView {
         this.root = new VBox(this.topNode, this.stackPane, this.bottomNode);
 
 
-
-
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {

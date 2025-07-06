@@ -1,5 +1,6 @@
 package com.zeitoun.codevault.folderspane.view;
 
+import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
 import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
 import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersController;
 import javafx.beans.InvalidationListener;
@@ -14,7 +15,7 @@ import javafx.scene.layout.VBox;
 
 public class FoldersPaneView {
     private final VBox root;
-    private final ListView foldersPane;
+    private final ListView<String> foldersPane;
     private final HBox topBox;
     private final Label header;
     private final Button addBUtton;
@@ -23,6 +24,7 @@ public class FoldersPaneView {
     private final FoldersPaneViewModel foldersPaneViewModel;
 
     private ShowFoldersController showFoldersController;
+    private CreateCodeSnippetController createCodeSnippetController;
 
     private CreateFolderController createFolderController;
     public FoldersPaneView(FoldersPaneViewModel foldersPaneViewModel) {
@@ -63,6 +65,12 @@ public class FoldersPaneView {
             }
         });
 
+        foldersPane.getSelectionModel().selectedItemProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                createCodeSnippetController.setFolder(foldersPane.getSelectionModel().getSelectedItem());
+            }
+        });
 
     }
 
@@ -77,6 +85,11 @@ public class FoldersPaneView {
     public void setShowFoldersController(ShowFoldersController showFoldersController) {
         this.showFoldersController = showFoldersController;
     }
+
+    public void setCreateCodeSnippetController(CreateCodeSnippetController createCodeSnippetController) {
+        this.createCodeSnippetController = createCodeSnippetController;
+    }
+
 
     public FoldersPaneViewModel getFoldersPaneViewModel() {
         return foldersPaneViewModel;

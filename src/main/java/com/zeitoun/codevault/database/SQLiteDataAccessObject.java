@@ -26,13 +26,14 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
     }
 
     @Override
-    public void saveSnippet(String code, String name, String description, String language) {
-       String query = "INSERT INTO " + snippetsTable + " VALUES(?, ?, ?, ?);";
+    public void saveSnippet(String code, String name, String description, String language, String folder) {
+       String query = "INSERT INTO " + snippetsTable + " VALUES(?, ?, ?, ?, ?);";
         try(PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setString(1, code);
             statement.setString(2, name);
             statement.setString(3, description);
             statement.setString(4, language);
+            statement.setString(5, folder);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -56,7 +57,7 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
 
 
     public void createSnippetsTable() {
-        String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), PRIMARY KEY(name, language));" ;
+        String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), folder VARCHAR(30), PRIMARY KEY(name, language));" ;
 
         try(PreparedStatement statement = connection.prepareStatement(query);) {
             statement.executeUpdate();

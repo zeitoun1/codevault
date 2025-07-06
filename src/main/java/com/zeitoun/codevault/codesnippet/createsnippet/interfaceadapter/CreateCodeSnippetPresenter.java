@@ -3,6 +3,11 @@ package com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter;
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetOutputBoundary;
 import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetViewModel;
 
+/**
+ * A Presenter for creating code snippets
+ * Shows success and error messages upon creation
+ */
+
 public class CreateCodeSnippetPresenter implements CreateCodeSnippetOutputBoundary {
     private CreateCodeSnippetViewModel createCodeSnippetViewModel;
 

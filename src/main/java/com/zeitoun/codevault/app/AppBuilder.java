@@ -27,6 +27,11 @@ import javafx.scene.layout.Priority;
 import java.sql.Connection;
 import java.util.Arrays;
 
+
+/**
+ * Builds App's views, use cases and the main scene as well as loading any data that should be loaded at the start of
+ * the application.
+ */
 public class AppBuilder {
     private final SQLiteConnectionManager sqLiteConnectionManager = new SQLiteConnectionManager();
     private SQLiteDataAccessObject sqLiteDataAccessObject;
@@ -34,6 +39,7 @@ public class AppBuilder {
     private CreateCodeSnippetView createCodeSnippetView;
     private FoldersPaneViewModel foldersPaneViewModel;
     private FoldersPaneView foldersPaneView;
+    private CreateCodeSnippetController createCodeSnippetController;
 
 
     // Building DB parts
@@ -75,7 +81,7 @@ public class AppBuilder {
         CreateCodeSnippetOutputBoundary createCodeSnippetOutputBoundary = new CreateCodeSnippetPresenter(createCodeSnippetViewModel);
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);
 
-        CreateCodeSnippetController createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor);
+        createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor);
         createCodeSnippetView.setController(createCodeSnippetController);
         return this;
     }
@@ -87,6 +93,7 @@ public class AppBuilder {
 
         CreateFolderController createFolderController = new CreateFolderController(createFolderInteractor);
         foldersPaneView.setCreateFolderController(createFolderController);
+        foldersPaneView.setCreateCodeSnippetController(createCodeSnippetController);
         return this;
     }
 

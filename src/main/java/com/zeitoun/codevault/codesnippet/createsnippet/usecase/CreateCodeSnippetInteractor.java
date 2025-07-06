@@ -29,10 +29,13 @@ public class CreateCodeSnippetInteractor {
           this.createCodeSnippetOutputBoundary.showErrorMessage("Snippet name is missing.");
         } else if (newSnippet.getLanguage() == null) {
             this.createCodeSnippetOutputBoundary.showErrorMessage("Language is missing.");
-        } else if (repository.isMember(newSnippet.getName(), newSnippet.getLanguage())) {
+        } else if (newSnippet.getFolder() == null) {
+            this.createCodeSnippetOutputBoundary.showErrorMessage("folder is missing");
+        }
+        else if (repository.isMember(newSnippet.getName(), newSnippet.getLanguage())) {
             this.createCodeSnippetOutputBoundary.showErrorMessage("A code snippet with that name and language already exists.");
         } else {
-            this.repository.saveSnippet(newSnippet.getCode(), newSnippet.getName(), newSnippet.getDescription(), newSnippet.getLanguage());
+            this.repository.saveSnippet(newSnippet.getCode(), newSnippet.getName(), newSnippet.getDescription(), newSnippet.getLanguage(), newSnippet.getFolder());
             this.createCodeSnippetOutputBoundary.showSuccessMessage("Snippet saved successfully.");
         }
     }
