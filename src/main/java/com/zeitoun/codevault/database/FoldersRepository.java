@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.folderspane.dataaccess;
+package com.zeitoun.codevault.database;
 
 import java.util.List;
 

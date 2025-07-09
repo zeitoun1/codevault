@@ -1,6 +1,6 @@
-package com.zeitoun.codevault.snippetspane;
+package com.zeitoun.codevault.codesnippet.showsnippets.view;
 
-import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
+import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsController;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
@@ -11,6 +11,7 @@ public class SnippetsPaneView {
     private final Label header;
 
     private final SnippetsPaneViewModel snippetsPaneViewModel;
+    private ShowSnippetsController showSnippetsController;
 
     public SnippetsPaneView(SnippetsPaneViewModel snippetsPaneViewModel) {
         this.snippetsPaneViewModel = snippetsPaneViewModel;
@@ -22,5 +23,13 @@ public class SnippetsPaneView {
 
     public VBox getRoot() {
         return root;
+    }
+
+    public ShowSnippetsController getShowSnippetsController() {
+        return showSnippetsController;
+    }
+
+    public void setShowSnippetsController(ShowSnippetsController showSnippetsController) {
+        this.showSnippetsController = showSnippetsController;
     }
 }

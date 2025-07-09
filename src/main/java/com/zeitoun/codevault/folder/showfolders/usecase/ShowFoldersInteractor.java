@@ -1,6 +1,6 @@
-package com.zeitoun.codevault.folderspane.showfolders.usecase;
+package com.zeitoun.codevault.folder.showfolders.usecase;
 
-import com.zeitoun.codevault.folderspane.dataaccess.FoldersRepository;
+import com.zeitoun.codevault.database.FoldersRepository;
 
 public class ShowFoldersInteractor {
     FoldersRepository foldersRepository;

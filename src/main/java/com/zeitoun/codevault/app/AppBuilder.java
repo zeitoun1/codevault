@@ -8,18 +8,22 @@ import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetVie
 import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetViewModel;
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
-import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
-import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderPresenter;
-import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderInteractor;
-import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderOutputBoundary;
-import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersController;
-import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersInteractor;
-import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersOutPutBoundary;
-import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersPresenter;
-import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
-import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
-import com.zeitoun.codevault.snippetspane.SnippetsPaneView;
-import com.zeitoun.codevault.snippetspane.SnippetsPaneViewModel;
+import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
+import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderPresenter;
+import com.zeitoun.codevault.folder.createfolder.usecase.CreateFolderInteractor;
+import com.zeitoun.codevault.folder.createfolder.usecase.CreateFolderOutputBoundary;
+import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
+import com.zeitoun.codevault.folder.showfolders.usecase.ShowFoldersInteractor;
+import com.zeitoun.codevault.folder.showfolders.usecase.ShowFoldersOutPutBoundary;
+import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersPresenter;
+import com.zeitoun.codevault.folder.view.FoldersPaneView;
+import com.zeitoun.codevault.folder.view.FoldersPaneViewModel;
+import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsController;
+import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsPresenter;
+import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsInteractor;
+import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsOutputBoundary;
+import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneView;
+import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -114,6 +118,16 @@ public class AppBuilder {
 
         ShowFoldersController showFoldersController = new ShowFoldersController(showFoldersInteractor);
         foldersPaneView.setShowFoldersController(showFoldersController);
+        foldersPaneView.setShowSnippetsController(snippetsPaneView.getShowSnippetsController());
+        return this;
+    }
+
+    public AppBuilder addShowSnippetsUseCase() {
+        ShowSnippetsOutputBoundary showSnippetsOutputBoundary = new ShowSnippetsPresenter(snippetsPaneViewModel);
+        ShowSnippetsInteractor showSnippetsInteractor = new ShowSnippetsInteractor(sqLiteDataAccessObject, showSnippetsOutputBoundary);
+
+        ShowSnippetsController showSnippetsController = new ShowSnippetsController(showSnippetsInteractor);
+        snippetsPaneView.setShowSnippetsController(showSnippetsController);
         return this;
     }
 

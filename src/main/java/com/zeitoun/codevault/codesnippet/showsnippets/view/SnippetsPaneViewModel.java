@@ -1,10 +1,7 @@
-package com.zeitoun.codevault.snippetspane;
+package com.zeitoun.codevault.codesnippet.showsnippets.view;
 
-import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.List;
 
 public class SnippetsPaneViewModel {
     private ObservableList<String> snippets;

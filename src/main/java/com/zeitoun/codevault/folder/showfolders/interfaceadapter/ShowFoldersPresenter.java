@@ -1,7 +1,7 @@
-package com.zeitoun.codevault.folderspane.showfolders.interfaceadapter;
+package com.zeitoun.codevault.folder.showfolders.interfaceadapter;
 
-import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersOutPutBoundary;
-import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
+import com.zeitoun.codevault.folder.showfolders.usecase.ShowFoldersOutPutBoundary;
+import com.zeitoun.codevault.folder.view.FoldersPaneViewModel;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package com.zeitoun.codevault.folderspane.createfolder.usecase;
+package com.zeitoun.codevault.folder.createfolder.usecase;
 
-import com.zeitoun.codevault.folderspane.dataaccess.FoldersRepository;
+import com.zeitoun.codevault.database.FoldersRepository;
 
 public class CreateFolderInteractor {
     private final FoldersRepository foldersRepository;

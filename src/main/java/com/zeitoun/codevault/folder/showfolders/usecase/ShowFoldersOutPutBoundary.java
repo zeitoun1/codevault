@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.folderspane.showfolders.usecase;
+package com.zeitoun.codevault.folder.showfolders.usecase;
 
 import java.util.List;
 

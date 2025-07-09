@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.folderspane.view;
+package com.zeitoun.codevault.folder.view;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

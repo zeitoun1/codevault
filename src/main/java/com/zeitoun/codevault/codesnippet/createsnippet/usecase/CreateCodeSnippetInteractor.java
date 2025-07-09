@@ -1,6 +1,6 @@
 package com.zeitoun.codevault.codesnippet.createsnippet.usecase;
 
-import com.zeitoun.codevault.codesnippet.dataaccess.SnippetRepository;
+import com.zeitoun.codevault.database.SnippetRepository;
 
 /**
  * Interactor class responsible for creating code snippets.

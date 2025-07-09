@@ -1,12 +1,7 @@
 package com.zeitoun.codevault.database;
 
-import com.zeitoun.codevault.codesnippet.dataaccess.SnippetRepository;
-import com.zeitoun.codevault.folderspane.dataaccess.FoldersRepository;
-
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -53,6 +48,23 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public List<String> getSnippets(String selectedFolder) {
+        List<String> result = new ArrayList<>();
+        String query = "SELECT name FROM " + snippetsTable + " WHERE folder=?";
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, selectedFolder);
+            ResultSet snippets = statement.executeQuery();
+            while (snippets.next()) {
+                result.add(snippets.getString("name"));
+            }
+            return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 
