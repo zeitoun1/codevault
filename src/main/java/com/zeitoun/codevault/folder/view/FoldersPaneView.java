@@ -1,5 +1,6 @@
 package com.zeitoun.codevault.folder.view;
 
+import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
@@ -28,7 +29,12 @@ public class FoldersPaneView {
     private CreateCodeSnippetController createCodeSnippetController;
     private ShowSnippetsController showSnippetsController;
 
+    private final String name = "folders pane";
+
+    private SceneManager sceneManager;
+
     private CreateFolderController createFolderController;
+
     public FoldersPaneView(FoldersPaneViewModel foldersPaneViewModel) {
         this.foldersPaneViewModel = new FoldersPaneViewModel();
         this.addBUtton = new Button("new folder");
@@ -67,11 +73,14 @@ public class FoldersPaneView {
             }
         });
 
+
+        // on selection of a folder, show the snippets
         foldersPane.getSelectionModel().selectedItemProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 createCodeSnippetController.setFolder(foldersPane.getSelectionModel().getSelectedItem());
                 showSnippetsController.execute(foldersPane.getSelectionModel().getSelectedItem());
+                sceneManager.addNodeToRoot("snippets pane", 1);
             }
         });
 
@@ -80,7 +89,6 @@ public class FoldersPaneView {
     public VBox getRoot() {
         return root;
     }
-
     public void setCreateFolderController(CreateFolderController createFolderController) {
         this.createFolderController = createFolderController;
     }
@@ -108,5 +116,13 @@ public class FoldersPaneView {
 
     public void setShowSnippetsController(ShowSnippetsController showSnippetsController) {
         this.showSnippetsController = showSnippetsController;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 }

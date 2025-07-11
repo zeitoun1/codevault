@@ -1,6 +1,7 @@
 package com.zeitoun.codevault.codesnippet.createsnippet.view;
 
 import com.zeitoun.codevault.ToastNotification;
+import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
 import eu.mihosoft.monacofx.MonacoFX;
 import javafx.beans.InvalidationListener;
@@ -20,7 +21,6 @@ public class CreateCodeSnippetView {
     private final StackPane stackPane;
 
 
-
     private final MonacoFX editorNode;
     private final HBox bottomNode;
     private final TextArea descriptionBox;
@@ -32,6 +32,10 @@ public class CreateCodeSnippetView {
     private final CreateCodeSnippetViewModel viewModel;
     private ToastNotification toastNotification;
 
+
+
+    private final String name = "create snippet";
+    private SceneManager sceneManager;
 
     public CreateCodeSnippetView(CreateCodeSnippetViewModel viewModel) {
         this.viewModel = viewModel;
@@ -129,5 +133,13 @@ public class CreateCodeSnippetView {
 
     public void setController(CreateCodeSnippetController controller) {
         this.controller = controller;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setSceneManager(SceneManager sceneManager) {
+        this.sceneManager = sceneManager;
     }
 }

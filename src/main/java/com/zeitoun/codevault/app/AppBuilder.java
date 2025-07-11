@@ -47,6 +47,7 @@ public class AppBuilder {
     private FoldersPaneView foldersPaneView;
     private SnippetsPaneViewModel snippetsPaneViewModel;
     private SnippetsPaneView snippetsPaneView;
+    private final SceneManager sceneManager = new SceneManager();
 
     // Building DB parts
 
@@ -71,6 +72,8 @@ public class AppBuilder {
         languages.setAll(Arrays.asList("c", "c++", "python", "java"));
         createCodeSnippetViewModel = new CreateCodeSnippetViewModel(languages);
         createCodeSnippetView = new CreateCodeSnippetView(createCodeSnippetViewModel);
+        createCodeSnippetView.setSceneManager(sceneManager);
+        sceneManager.addNode(createCodeSnippetView.getName(), createCodeSnippetView.getRoot());
         return this;
     }
 
@@ -78,12 +81,16 @@ public class AppBuilder {
     public AppBuilder addFoldersPaneView() {
         foldersPaneViewModel = new FoldersPaneViewModel();
         foldersPaneView = new FoldersPaneView(foldersPaneViewModel);
+        foldersPaneView.setSceneManager(sceneManager);
+        sceneManager.addNode(foldersPaneView.getName(), foldersPaneView.getRoot());
         return this;
     }
 
     public AppBuilder addSnippetsPaneView() {
         snippetsPaneViewModel = new SnippetsPaneViewModel();
         snippetsPaneView = new SnippetsPaneView(snippetsPaneViewModel);
+        snippetsPaneView.setSceneManager(sceneManager);
+        sceneManager.addNode(snippetsPaneView.getName(), snippetsPaneView.getRoot());
         return this;
     }
 
@@ -145,16 +152,13 @@ public class AppBuilder {
 
     // Building the Scene
     public Scene build() {
-        HBox root = new HBox(foldersPaneView.getRoot(), snippetsPaneView.getRoot(), createCodeSnippetView.getRoot());
+        HBox root = new HBox(foldersPaneView.getRoot(), createCodeSnippetView.getRoot());
         HBox.setHgrow(createCodeSnippetView.getRoot(), Priority.ALWAYS);
         Scene scene = new Scene(root);
         foldersPaneView.getRoot().prefWidthProperty().bind(scene.widthProperty().multiply(0.1));
+        sceneManager.setCurrentScene(scene);
         return scene;
 
     }
-
-
-
-
 
 }
