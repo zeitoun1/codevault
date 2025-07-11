@@ -37,12 +37,12 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
     }
 
     @Override
-    public Boolean isMember(String name, String language) {
-        String query = "SELECT * FROM " + snippetsTable + " WHERE name=? AND language=?";
+    public Boolean isMember(String name, String folder) {
+        String query = "SELECT * FROM " + snippetsTable + " WHERE name=? AND folder=?";
 
         try(PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, name);
-            statement.setString(2, language);
+            statement.setString(2, folder);
             ResultSet result = statement.executeQuery();
             return result.next();
         } catch (SQLException e) {
@@ -69,7 +69,7 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
 
 
     public void createSnippetsTable() {
-        String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), folder VARCHAR(30), PRIMARY KEY(name, language));" ;
+        String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), folder VARCHAR(30), PRIMARY KEY(name, folder));" ;
 
         try(PreparedStatement statement = connection.prepareStatement(query);) {
             statement.executeUpdate();

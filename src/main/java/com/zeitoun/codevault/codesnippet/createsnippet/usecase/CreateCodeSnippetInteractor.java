@@ -32,8 +32,8 @@ public class CreateCodeSnippetInteractor {
         } else if (newSnippet.getFolder() == null) {
             this.createCodeSnippetOutputBoundary.showErrorMessage("folder is missing");
         }
-        else if (repository.isMember(newSnippet.getName(), newSnippet.getLanguage())) {
-            this.createCodeSnippetOutputBoundary.showErrorMessage("A code snippet with that name and language already exists.");
+        else if (repository.isMember(newSnippet.getName(), newSnippet.getFolder())) {
+            this.createCodeSnippetOutputBoundary.showErrorMessage("A code snippet with that name already exists in the folder.");
         } else {
             this.repository.saveSnippet(newSnippet.getCode(), newSnippet.getName(), newSnippet.getDescription(), newSnippet.getLanguage(), newSnippet.getFolder());
             this.createCodeSnippetOutputBoundary.showSuccessMessage("Snippet saved successfully.");
