@@ -24,6 +24,7 @@ import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsIntera
 import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsOutputBoundary;
 import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneView;
 import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel;
+import com.zeitoun.codevault.shared.AppContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -48,6 +49,7 @@ public class AppBuilder {
     private SnippetsPaneViewModel snippetsPaneViewModel;
     private SnippetsPaneView snippetsPaneView;
     private final SceneManager sceneManager = new SceneManager();
+    private final AppContext appContext = new AppContext();
 
     // Building DB parts
 
@@ -102,7 +104,7 @@ public class AppBuilder {
         CreateCodeSnippetOutputBoundary createCodeSnippetOutputBoundary = new CreateCodeSnippetPresenter(createCodeSnippetViewModel);
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);
 
-        CreateCodeSnippetController createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor);
+        CreateCodeSnippetController createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor, appContext);
         createCodeSnippetView.setController(createCodeSnippetController);
         return this;
     }
@@ -114,7 +116,6 @@ public class AppBuilder {
 
         CreateFolderController createFolderController = new CreateFolderController(createFolderInteractor);
         foldersPaneView.setCreateFolderController(createFolderController);
-        foldersPaneView.setCreateCodeSnippetController(createCodeSnippetView.getController());
         return this;
     }
 
@@ -131,7 +132,7 @@ public class AppBuilder {
 
     public AppBuilder addShowSnippetsUseCase() {
         ShowSnippetsOutputBoundary showSnippetsOutputBoundary = new ShowSnippetsPresenter(snippetsPaneViewModel);
-        ShowSnippetsInteractor showSnippetsInteractor = new ShowSnippetsInteractor(sqLiteDataAccessObject, showSnippetsOutputBoundary);
+        ShowSnippetsInteractor showSnippetsInteractor = new ShowSnippetsInteractor(sqLiteDataAccessObject, showSnippetsOutputBoundary, appContext);
 
         ShowSnippetsController showSnippetsController = new ShowSnippetsController(showSnippetsInteractor);
         snippetsPaneView.setShowSnippetsController(showSnippetsController);

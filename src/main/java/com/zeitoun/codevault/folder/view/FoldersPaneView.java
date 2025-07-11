@@ -26,7 +26,6 @@ public class FoldersPaneView {
     private final FoldersPaneViewModel foldersPaneViewModel;
 
     private ShowFoldersController showFoldersController;
-    private CreateCodeSnippetController createCodeSnippetController;
     private ShowSnippetsController showSnippetsController;
 
     private final String name = "folders pane";
@@ -78,8 +77,7 @@ public class FoldersPaneView {
         foldersPane.getSelectionModel().selectedItemProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
-                createCodeSnippetController.setFolder(foldersPane.getSelectionModel().getSelectedItem());
-                showSnippetsController.execute(foldersPane.getSelectionModel().getSelectedItem());
+                showSnippetsController.showSnippets(foldersPane.getSelectionModel().getSelectedItem());
                 sceneManager.addNodeToRoot("snippets pane", 1);
             }
         });
@@ -96,11 +94,6 @@ public class FoldersPaneView {
     public void setShowFoldersController(ShowFoldersController showFoldersController) {
         this.showFoldersController = showFoldersController;
     }
-
-    public void setCreateCodeSnippetController(CreateCodeSnippetController createCodeSnippetController) {
-        this.createCodeSnippetController = createCodeSnippetController;
-    }
-
 
     public FoldersPaneViewModel getFoldersPaneViewModel() {
         return foldersPaneViewModel;

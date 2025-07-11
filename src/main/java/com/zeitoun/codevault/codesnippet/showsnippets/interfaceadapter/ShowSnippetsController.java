@@ -4,13 +4,14 @@ import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsIntera
 
 public class ShowSnippetsController {
 
-    private ShowSnippetsInteractor showSnippetsInteractor;
+    private final ShowSnippetsInteractor showSnippetsInteractor;
 
     public ShowSnippetsController(ShowSnippetsInteractor showSnippetsInteractor) {
         this.showSnippetsInteractor = showSnippetsInteractor;
     }
 
-    public void execute(String selectedFolder) {
-        showSnippetsInteractor.showSnippets(selectedFolder);
+    public void showSnippets(String selectedFolder) {
+        showSnippetsInteractor.getAppContext().setSelectedFolder(selectedFolder); // setting the selected folder for the CreateSnippet and GetSnippet use cases
+        showSnippetsInteractor.execute(selectedFolder);
     }
 }
