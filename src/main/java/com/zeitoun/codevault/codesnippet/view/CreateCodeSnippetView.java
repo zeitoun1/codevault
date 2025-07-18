@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.view;
+package com.zeitoun.codevault.codesnippet.view;
 
 import com.zeitoun.codevault.ToastNotification;
 import com.zeitoun.codevault.app.SceneManager;
@@ -29,7 +29,8 @@ public class CreateCodeSnippetView {
 
 
     private  CreateCodeSnippetController controller;
-    private final CreateCodeSnippetViewModel viewModel;
+    private final CreateCodeSnippetViewModel createCodeSnippetViewModel;
+    private final GetSnippetViewModel getSnippetViewModel;
     private ToastNotification toastNotification;
 
 
@@ -37,8 +38,9 @@ public class CreateCodeSnippetView {
     private final String name = "create snippet";
     private SceneManager sceneManager;
 
-    public CreateCodeSnippetView(CreateCodeSnippetViewModel viewModel) {
-        this.viewModel = viewModel;
+    public CreateCodeSnippetView(CreateCodeSnippetViewModel createCodeSnippetViewModel, GetSnippetViewModel getSnippetViewModel) {
+        this.createCodeSnippetViewModel = createCodeSnippetViewModel;
+        this.getSnippetViewModel = getSnippetViewModel;
 
 
         // initializing child nodes
@@ -48,7 +50,7 @@ public class CreateCodeSnippetView {
         nameBox.setFont(new Font(20));
 
 
-        this.languageBox = new ComboBox<>(viewModel.getEditorLanguages());
+        this.languageBox = new ComboBox<>(createCodeSnippetViewModel.getEditorLanguages());
 
         this.editorNode = new MonacoFX();
         editorNode.getEditor().setCurrentTheme("vs-dark");
@@ -97,22 +99,33 @@ public class CreateCodeSnippetView {
         });
 
         // Add listeners (Dialog boxes) to the errorMessage property
-        viewModel.errorMessageProperty().addListener(new InvalidationListener() {
+        createCodeSnippetViewModel.errorMessageProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 Alert errorDialog = new Alert(Alert.AlertType.ERROR);
                 errorDialog.setTitle("Error");
-                errorDialog.setContentText(viewModel.getErrorMessage());
+                errorDialog.setContentText(createCodeSnippetViewModel.getErrorMessage());
                 errorDialog.showAndWait();
             }
         });
 
         // Add listeners (Toast Notification) to the successMessage property
-        viewModel.successMessageProperty().addListener(new InvalidationListener() {
+        createCodeSnippetViewModel.successMessageProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
-                toastNotification.setText(viewModel.getSuccessMessage());
+                toastNotification.setText(createCodeSnippetViewModel.getSuccessMessage());
                 toastNotification.showAndHide(2000);
+            }
+        });
+
+        // Add listener to the code snippet name property and also update all other ui elements
+        getSnippetViewModel.getNameProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                nameBox.setText(getSnippetViewModel.getName());
+                editorNode.getEditor().getDocument().setText(getSnippetViewModel.getCode());
+                descriptionBox.setText(getSnippetViewModel.getDescription());
+                languageBox.setValue(getSnippetViewModel.getLanguage());
             }
         });
 
