@@ -4,7 +4,7 @@ import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCo
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetPresenter;
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInteractor;
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetOutputBoundary;
-import com.zeitoun.codevault.codesnippet.view.CreateCodeSnippetView;
+import com.zeitoun.codevault.codesnippet.view.CodeSnippetView;
 import com.zeitoun.codevault.codesnippet.view.CreateCodeSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.view.GetSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
@@ -27,8 +27,7 @@ import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnipp
 import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsPresenter;
 import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsInteractor;
 import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsOutputBoundary;
-import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneView;
-import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel;
+import com.zeitoun.codevault.codesnippet.view.SnippetsPaneViewModel;
 import com.zeitoun.codevault.shared.AppContext;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,11 +48,10 @@ public class AppBuilder {
     private SQLiteDataAccessObject sqLiteDataAccessObject;
     private CreateCodeSnippetViewModel createCodeSnippetViewModel;
     private GetSnippetViewModel getSnippetViewModel;
-    private CreateCodeSnippetView createCodeSnippetView;
+    private CodeSnippetView codeSnippetView;
     private FoldersPaneViewModel foldersPaneViewModel;
     private FoldersPaneView foldersPaneView;
     private SnippetsPaneViewModel snippetsPaneViewModel;
-    private SnippetsPaneView snippetsPaneView;
     private final SceneManager sceneManager = new SceneManager();
     private final AppContext appContext = new AppContext();
 
@@ -80,9 +78,10 @@ public class AppBuilder {
         languages.setAll(Arrays.asList("c", "c++", "python", "java"));
         createCodeSnippetViewModel = new CreateCodeSnippetViewModel(languages);
         getSnippetViewModel = new GetSnippetViewModel();
-        createCodeSnippetView = new CreateCodeSnippetView(createCodeSnippetViewModel, getSnippetViewModel);
-        createCodeSnippetView.setSceneManager(sceneManager);
-        sceneManager.addNode(createCodeSnippetView.getName(), createCodeSnippetView.getRoot());
+        snippetsPaneViewModel = new SnippetsPaneViewModel();
+        codeSnippetView = new CodeSnippetView(createCodeSnippetViewModel, getSnippetViewModel, snippetsPaneViewModel);
+        codeSnippetView.setSceneManager(sceneManager);
+        sceneManager.addNode(codeSnippetView.getName(), codeSnippetView.getRoot());
         return this;
     }
 
@@ -95,15 +94,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addSnippetsPaneView() {
-        snippetsPaneViewModel = new SnippetsPaneViewModel();
-        snippetsPaneView = new SnippetsPaneView(snippetsPaneViewModel);
-        snippetsPaneView.setSceneManager(sceneManager);
-        sceneManager.addNode(snippetsPaneView.getName(), snippetsPaneView.getRoot());
-        return this;
-    }
-
-
 
     // Building UseCases
 
@@ -112,7 +102,7 @@ public class AppBuilder {
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);
 
         CreateCodeSnippetController createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor, appContext);
-        createCodeSnippetView.setController(createCodeSnippetController);
+        codeSnippetView.setCreateCodeSnippetController(createCodeSnippetController);
         return this;
     }
 
@@ -133,7 +123,7 @@ public class AppBuilder {
 
         ShowFoldersController showFoldersController = new ShowFoldersController(showFoldersInteractor);
         foldersPaneView.setShowFoldersController(showFoldersController);
-        foldersPaneView.setShowSnippetsController(snippetsPaneView.getShowSnippetsController());
+        foldersPaneView.setShowSnippetsController(codeSnippetView.getShowSnippetsController());
         return this;
     }
 
@@ -141,8 +131,8 @@ public class AppBuilder {
         ShowSnippetsOutputBoundary showSnippetsOutputBoundary = new ShowSnippetsPresenter(snippetsPaneViewModel);
         ShowSnippetsInteractor showSnippetsInteractor = new ShowSnippetsInteractor(sqLiteDataAccessObject, showSnippetsOutputBoundary, appContext);
 
-        ShowSnippetsController showSnippetsController = new ShowSnippetsController(showSnippetsInteractor);
-        snippetsPaneView.setShowSnippetsController(showSnippetsController);
+        ShowSnippetsController showSnippetsController = new ShowSnippetsController(showSnippetsInteractor, appContext);
+        codeSnippetView.setShowSnippetsController(showSnippetsController);
         return this;
     }
 
@@ -151,7 +141,7 @@ public class AppBuilder {
         GetSnippetInteractor getSnippetInteractor = new GetSnippetInteractor(sqLiteDataAccessObject, getSnippetOutputBoundary);
 
         GetSnippetController getSnippetController = new GetSnippetController(getSnippetInteractor, appContext);
-        snippetsPaneView.setGetSnippetController(getSnippetController);
+        codeSnippetView.setGetSnippetController(getSnippetController);
         return this;
     }
 
@@ -169,8 +159,8 @@ public class AppBuilder {
 
     // Building the Scene
     public Scene build() {
-        HBox root = new HBox(foldersPaneView.getRoot(), createCodeSnippetView.getRoot());
-        HBox.setHgrow(createCodeSnippetView.getRoot(), Priority.ALWAYS);
+        HBox root = new HBox(foldersPaneView.getRoot(), codeSnippetView.getRoot());
+        HBox.setHgrow(codeSnippetView.getRoot(), Priority.ALWAYS);
         Scene scene = new Scene(root);
         foldersPaneView.getRoot().prefWidthProperty().bind(scene.widthProperty().multiply(0.1));
         sceneManager.setCurrentScene(scene);

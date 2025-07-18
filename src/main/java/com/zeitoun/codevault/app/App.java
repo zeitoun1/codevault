@@ -27,7 +27,6 @@ public class App extends Application {
                 .createTables()
                 .addCreateCodeSnippetView()
                 .addFoldersPaneView()
-                .addSnippetsPaneView()
                 .addShowSnippetsUseCase()
                 .addCreateCodeSnippetUseCase()
                 .addCreateFolderUseCase()
