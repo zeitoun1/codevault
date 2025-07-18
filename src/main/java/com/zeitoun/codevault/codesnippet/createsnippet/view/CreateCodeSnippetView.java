@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.view;
+package com.zeitoun.codevault.codesnippet.createsnippet.view;
 
 import com.zeitoun.codevault.ToastNotification;
 import com.zeitoun.codevault.app.SceneManager;
@@ -37,20 +37,32 @@ public class CodeSnippetView {
 
     private ShowSnippetsController showSnippetsController;
 
+<<<<<<<< HEAD:src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CodeSnippetView.java
     private GetSnippetController getSnippetController;
 
     private  CreateCodeSnippetController createCodeSnippetController;
     private final CreateCodeSnippetViewModel createCodeSnippetViewModel;
     private final GetSnippetViewModel getSnippetViewModel;
+========
+    private  CreateCodeSnippetController controller;
+    private final CreateCodeSnippetViewModel viewModel;
+    private ToastNotification toastNotification;
+>>>>>>>> parent of 337ea06 (fixed bug with chosen language in get snippet usecase.):src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CreateCodeSnippetView.java
 
     private final SnippetsPaneViewModel snippetsPaneViewModel;
 
     private SceneManager sceneManager;
+<<<<<<<< HEAD:src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CodeSnippetView.java
     private final String name = "create snippet";
     public CodeSnippetView(CreateCodeSnippetViewModel createCodeSnippetViewModel, GetSnippetViewModel getSnippetViewModel, SnippetsPaneViewModel snippetsPaneViewModel) {
         this.createCodeSnippetViewModel = createCodeSnippetViewModel;
         this.getSnippetViewModel = getSnippetViewModel;
         this.snippetsPaneViewModel = snippetsPaneViewModel;
+========
+
+    public CreateCodeSnippetView(CreateCodeSnippetViewModel viewModel) {
+        this.viewModel = viewModel;
+>>>>>>>> parent of 337ea06 (fixed bug with chosen language in get snippet usecase.):src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CreateCodeSnippetView.java
 
 
         // initializing snippetNode (where snippet creations takes place and where the contents of snippets are viewed)
@@ -63,9 +75,13 @@ public class CodeSnippetView {
 
         languageBox = new ComboBox<>(createCodeSnippetViewModel.getEditorLanguages());
 
+<<<<<<<< HEAD:src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CodeSnippetView.java
         topNode = new AnchorPane(this.nameBox, this.languageBox);
         AnchorPane.setTopAnchor(languageBox, 2.0);
         AnchorPane.setRightAnchor(languageBox, 20.0);
+========
+        this.languageBox = new ComboBox<>(viewModel.getEditorLanguages());
+>>>>>>>> parent of 337ea06 (fixed bug with chosen language in get snippet usecase.):src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CreateCodeSnippetView.java
 
         // stackPane
         editorNode = new MonacoFX();
@@ -117,26 +133,37 @@ public class CodeSnippetView {
             }
         });
 
+<<<<<<<< HEAD:src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CodeSnippetView.java
         // showing error message when CreateCodeSnippet is unsuccessful
         createCodeSnippetViewModel.errorMessageProperty().addListener(new InvalidationListener() {
+========
+        // Add listeners (Dialog boxes) to the errorMessage property
+        viewModel.errorMessageProperty().addListener(new InvalidationListener() {
+>>>>>>>> parent of 337ea06 (fixed bug with chosen language in get snippet usecase.):src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CreateCodeSnippetView.java
             @Override
             public void invalidated(Observable observable) {
                 Alert errorDialog = new Alert(Alert.AlertType.ERROR);
                 errorDialog.setTitle("Error");
-                errorDialog.setContentText(createCodeSnippetViewModel.getErrorMessage());
+                errorDialog.setContentText(viewModel.getErrorMessage());
                 errorDialog.showAndWait();
             }
         });
 
+<<<<<<<< HEAD:src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CodeSnippetView.java
         // showing success message when CreateCodeSnippet use case is successful
         createCodeSnippetViewModel.successMessageProperty().addListener(new InvalidationListener() {
+========
+        // Add listeners (Toast Notification) to the successMessage property
+        viewModel.successMessageProperty().addListener(new InvalidationListener() {
+>>>>>>>> parent of 337ea06 (fixed bug with chosen language in get snippet usecase.):src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CreateCodeSnippetView.java
             @Override
             public void invalidated(Observable observable) {
-                toastNotification.setText(createCodeSnippetViewModel.getSuccessMessage());
+                toastNotification.setText(viewModel.getSuccessMessage());
                 toastNotification.showAndHide(2000);
             }
         });
 
+<<<<<<<< HEAD:src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CodeSnippetView.java
 
         // adding listener to start the GetSnippet use case upon selection in the snippetsList
         snippetsList.getSelectionModel().selectedItemProperty().addListener(new InvalidationListener() {
@@ -157,6 +184,8 @@ public class CodeSnippetView {
             }
         });
 
+========
+>>>>>>>> parent of 337ea06 (fixed bug with chosen language in get snippet usecase.):src/main/java/com/zeitoun/codevault/codesnippet/createsnippet/view/CreateCodeSnippetView.java
     }
 
     public HBox getRoot() {

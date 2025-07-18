@@ -1,6 +1,5 @@
 package com.zeitoun.codevault.app;
 
-import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -31,12 +30,12 @@ public class App extends Application {
                 .addCreateCodeSnippetUseCase()
                 .addCreateFolderUseCase()
                 .addShowFoldersUseCase()
-                .addGetSnippetUseCase()
                 .loadFolders()
                 .build();
 
 
         primaryStage.setScene(scene);
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         primaryStage.setTitle("Code Vault");
         primaryStage.show();
     }

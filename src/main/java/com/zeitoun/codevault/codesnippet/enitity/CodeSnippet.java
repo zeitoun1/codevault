@@ -8,12 +8,14 @@ public class CodeSnippet {
     private String name;
     private String description;
     private String language;
+    boolean modified;
 
-    public CodeSnippet(String code, String name, String description, String language) {
+    public CodeSnippet(String code, String name, String description, String language, boolean modified) {
         this.code = code;
         this.name = name;
         this.description = description;
         this.language = language;
+        this.modified = modified;
     }
 
     public String getName() {
