@@ -1,5 +1,7 @@
 package com.zeitoun.codevault.database;
 
+import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
+
 import java.util.List;
 
 /**
@@ -9,5 +11,6 @@ public interface SnippetRepository {
     void saveSnippet(String code, String name, String description, String language, String folder);
     Boolean isMember(String name, String language);
     List<String> getSnippets(String selectedFolder);
+    CodeSnippet getSnippet(String name, String selectedFolder);
 
 }

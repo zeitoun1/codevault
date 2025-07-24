@@ -6,6 +6,11 @@ import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippet
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetOutputBoundary;
 import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetView;
 import com.zeitoun.codevault.codesnippet.createsnippet.view.CreateCodeSnippetViewModel;
+import com.zeitoun.codevault.codesnippet.getsnippet.GetSnippetViewModel;
+import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
+import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetPresenter;
+import com.zeitoun.codevault.codesnippet.getsnippet.usecase.GetSnippetInteractor;
+import com.zeitoun.codevault.codesnippet.getsnippet.usecase.GetSnippetOutputBoundary;
 import com.zeitoun.codevault.database.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.SQLiteDataAccessObject;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
@@ -43,6 +48,7 @@ public class AppBuilder {
     private final SQLiteConnectionManager sqLiteConnectionManager = new SQLiteConnectionManager();
     private SQLiteDataAccessObject sqLiteDataAccessObject;
     private CreateCodeSnippetViewModel createCodeSnippetViewModel;
+    private GetSnippetViewModel getSnippetViewModel;
     private CreateCodeSnippetView createCodeSnippetView;
     private FoldersPaneViewModel foldersPaneViewModel;
     private FoldersPaneView foldersPaneView;
@@ -73,7 +79,8 @@ public class AppBuilder {
         ObservableList<String> languages = FXCollections.observableArrayList();
         languages.setAll(Arrays.asList("c", "c++", "python", "java"));
         createCodeSnippetViewModel = new CreateCodeSnippetViewModel(languages);
-        createCodeSnippetView = new CreateCodeSnippetView(createCodeSnippetViewModel);
+        getSnippetViewModel = new GetSnippetViewModel();
+        createCodeSnippetView = new CreateCodeSnippetView(createCodeSnippetViewModel, getSnippetViewModel, snippetsPaneViewModel);
         createCodeSnippetView.setSceneManager(sceneManager);
         sceneManager.addNode(createCodeSnippetView.getName(), createCodeSnippetView.getRoot());
         return this;
@@ -105,7 +112,7 @@ public class AppBuilder {
         CreateCodeSnippetInteractor createCodeSnippetInteractor = new CreateCodeSnippetInteractor(sqLiteDataAccessObject, createCodeSnippetOutputBoundary);
 
         CreateCodeSnippetController createCodeSnippetController = new CreateCodeSnippetController(createCodeSnippetInteractor, appContext);
-        createCodeSnippetView.setController(createCodeSnippetController);
+        createCodeSnippetView.setCreateCodeSnippetController(createCodeSnippetController);
         return this;
     }
 
@@ -123,19 +130,24 @@ public class AppBuilder {
     public AppBuilder addShowFoldersUseCase() {
         ShowFoldersOutPutBoundary showFoldersOutPutBoundary = new ShowFoldersPresenter(foldersPaneViewModel);
         ShowFoldersInteractor showFoldersInteractor = new ShowFoldersInteractor(sqLiteDataAccessObject, showFoldersOutPutBoundary);
-
         ShowFoldersController showFoldersController = new ShowFoldersController(showFoldersInteractor);
         foldersPaneView.setShowFoldersController(showFoldersController);
-        foldersPaneView.setShowSnippetsController(snippetsPaneView.getShowSnippetsController());
         return this;
     }
 
     public AppBuilder addShowSnippetsUseCase() {
         ShowSnippetsOutputBoundary showSnippetsOutputBoundary = new ShowSnippetsPresenter(snippetsPaneViewModel);
         ShowSnippetsInteractor showSnippetsInteractor = new ShowSnippetsInteractor(sqLiteDataAccessObject, showSnippetsOutputBoundary, appContext);
+        ShowSnippetsController showSnippetsController = new ShowSnippetsController(showSnippetsInteractor, appContext);
+        foldersPaneView.setShowSnippetsController(showSnippetsController);
+        return this;
+    }
 
-        ShowSnippetsController showSnippetsController = new ShowSnippetsController(showSnippetsInteractor);
-        snippetsPaneView.setShowSnippetsController(showSnippetsController);
+    public AppBuilder addGetSnippetUseCase() {
+        GetSnippetOutputBoundary getSnippetOutputBoundary = new GetSnippetPresenter(getSnippetViewModel);
+        GetSnippetInteractor getSnippetInteractor = new GetSnippetInteractor(sqLiteDataAccessObject, getSnippetOutputBoundary);
+        GetSnippetController getSnippetController = new GetSnippetController(getSnippetInteractor, appContext);
+        snippetsPaneView.setGetSnippetController(getSnippetController);
         return this;
     }
 
@@ -148,7 +160,6 @@ public class AppBuilder {
         return this;
 
     }
-
 
 
     // Building the Scene

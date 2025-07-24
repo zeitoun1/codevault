@@ -78,7 +78,7 @@ public class FoldersPaneView {
             @Override
             public void invalidated(Observable observable) {
                 showSnippetsController.showSnippets(foldersPane.getSelectionModel().getSelectedItem());
-//                sceneManager.addNodeToRoot("snippets pane", 1);
+                sceneManager.addNodeToRoot("snippets pane", 1);
             }
         });
 
