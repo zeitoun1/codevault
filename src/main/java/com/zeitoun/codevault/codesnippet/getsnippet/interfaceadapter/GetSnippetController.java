@@ -14,6 +14,7 @@ public class GetSnippetController {
     }
 
     public void getSnippet(String snippetName) {
+        appContext.setSelectedSnippet(snippetName);
         getSnippetInteractor.execute(snippetName, appContext.getSelectedFolder());
     }
 

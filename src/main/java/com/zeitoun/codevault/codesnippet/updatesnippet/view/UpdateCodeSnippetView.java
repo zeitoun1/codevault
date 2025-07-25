@@ -1,8 +1,8 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.view;
+package com.zeitoun.codevault.codesnippet.updatesnippet.view;
 
 import com.zeitoun.codevault.ToastNotification;
 import com.zeitoun.codevault.app.SceneManager;
-import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
+import com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter.UpdateCodeSnippetController;
 import com.zeitoun.codevault.codesnippet.getsnippet.GetSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
 import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsController;
@@ -17,7 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 
-public class CreateCodeSnippetView {
+public class UpdateCodeSnippetView {
     private final VBox root;
     private final AnchorPane topNode;
     private final TextField nameBox;
@@ -32,9 +32,9 @@ public class CreateCodeSnippetView {
 
     private ShowSnippetsController showSnippetsController;
     private GetSnippetController getSnippetController;
-    private  CreateCodeSnippetController createCodeSnippetController;
+    private UpdateCodeSnippetController updateCodeSnippetController;
 
-    private final CreateCodeSnippetViewModel createCodeSnippetViewModel;
+    private final UpdateCodeSnippetViewModel updateCodeSnippetViewModel;
     private final GetSnippetViewModel getSnippetViewModel;
     private final SnippetsPaneViewModel snippetsPaneViewModel;
 
@@ -42,8 +42,8 @@ public class CreateCodeSnippetView {
     private SceneManager sceneManager;
     private final String name = "create snippet";
 
-    public CreateCodeSnippetView(CreateCodeSnippetViewModel createCodeSnippetViewModel, GetSnippetViewModel getSnippetViewModel, SnippetsPaneViewModel snippetsPaneViewModel) {
-        this.createCodeSnippetViewModel = createCodeSnippetViewModel;
+    public UpdateCodeSnippetView(UpdateCodeSnippetViewModel updateCodeSnippetViewModel, GetSnippetViewModel getSnippetViewModel, SnippetsPaneViewModel snippetsPaneViewModel) {
+        this.updateCodeSnippetViewModel = updateCodeSnippetViewModel;
         this.getSnippetViewModel = getSnippetViewModel;
         this.snippetsPaneViewModel = snippetsPaneViewModel;
         // initializing snippetNode (where snippet creations takes place and where the contents of snippets are viewed)
@@ -54,7 +54,7 @@ public class CreateCodeSnippetView {
         nameBox.setPromptText("Snippet name");
         nameBox.setFont(new Font(20));
 
-        languageBox = new ComboBox<>(createCodeSnippetViewModel.getEditorLanguages());
+        languageBox = new ComboBox<>(updateCodeSnippetViewModel.getEditorLanguages());
 
         topNode = new AnchorPane(this.nameBox, this.languageBox);
         AnchorPane.setTopAnchor(languageBox, 2.0);
@@ -96,26 +96,26 @@ public class CreateCodeSnippetView {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                createCodeSnippetController.execute(editorNode.getEditor().getDocument().getText(), nameBox.getText(), descriptionBox.getText(), languageBox.getValue());
+                updateCodeSnippetController.execute(editorNode.getEditor().getDocument().getText(), nameBox.getText(), descriptionBox.getText(), languageBox.getValue());
             }
         });
 
         // showing error message when CreateCodeSnippet is unsuccessful
-        createCodeSnippetViewModel.errorMessageProperty().addListener(new InvalidationListener() {
+        updateCodeSnippetViewModel.errorMessageProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 Alert errorDialog = new Alert(Alert.AlertType.ERROR);
                 errorDialog.setTitle("Error");
-                errorDialog.setContentText(createCodeSnippetViewModel.getErrorMessage());
+                errorDialog.setContentText(updateCodeSnippetViewModel.getErrorMessage());
                 errorDialog.showAndWait();
             }
         });
 
         // showing success message when CreateCodeSnippet use case is successful
-        createCodeSnippetViewModel.successMessageProperty().addListener(new InvalidationListener() {
+        updateCodeSnippetViewModel.successMessageProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
-                toastNotification.setText(createCodeSnippetViewModel.getSuccessMessage());
+                toastNotification.setText(updateCodeSnippetViewModel.getSuccessMessage());
                 toastNotification.showAndHide(2000);
             }
         });
@@ -124,7 +124,7 @@ public class CreateCodeSnippetView {
         getSnippetViewModel.getNameProperty().
                 addListener(new InvalidationListener() {
                     @Override
-                    public void invalidated (Observable observable){
+                    public void invalidated (Observable observable) {
                         nameBox.setText(getSnippetViewModel.getName());
                         editorNode.getEditor().getDocument().setText(getSnippetViewModel.getCode());
                         descriptionBox.setText(getSnippetViewModel.getDescription());
@@ -141,12 +141,12 @@ public class CreateCodeSnippetView {
         return editorNode;
     }
 
-    public CreateCodeSnippetController getCreateCodeSnippetController() {
-        return createCodeSnippetController;
+    public UpdateCodeSnippetController getCreateCodeSnippetController() {
+        return updateCodeSnippetController;
     }
 
-    public void setCreateCodeSnippetController(CreateCodeSnippetController createCodeSnippetController) {
-        this.createCodeSnippetController = createCodeSnippetController;
+    public void setCreateCodeSnippetController(UpdateCodeSnippetController updateCodeSnippetController) {
+        this.updateCodeSnippetController = updateCodeSnippetController;
     }
 
     public String getName() {

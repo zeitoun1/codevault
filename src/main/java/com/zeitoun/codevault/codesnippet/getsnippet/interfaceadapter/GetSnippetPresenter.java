@@ -14,10 +14,10 @@ public class GetSnippetPresenter implements GetSnippetOutputBoundary {
 
     @Override
     public void loadSnippet(GetSnippetOutputData getSnippetOutputData) {
-        // we only invalidate the name property, as we will update all other view elements at once
-        getSnippetViewModel.setName(getSnippetOutputData.getName());
         getSnippetViewModel.setCode(getSnippetOutputData.getCode());
         getSnippetViewModel.setDescription(getSnippetOutputData.getDescription());
         getSnippetViewModel.setLanguage(getSnippetOutputData.getLanguage());
+        // the view only listens to the name property as that is unique for every folder and it changes on selection
+        getSnippetViewModel.setName(getSnippetOutputData.getName());
     }
 }

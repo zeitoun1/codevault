@@ -27,7 +27,7 @@ public class GetSnippetViewModel {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code = code;;
     }
 
     public String getDescription() {

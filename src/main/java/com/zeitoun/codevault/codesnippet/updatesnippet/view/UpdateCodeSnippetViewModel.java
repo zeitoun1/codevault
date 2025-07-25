@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.view;
+package com.zeitoun.codevault.codesnippet.updatesnippet.view;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -6,13 +6,13 @@ import javafx.collections.ObservableList;
 
 import java.util.List;
 
-public class CreateCodeSnippetViewModel {
+public class UpdateCodeSnippetViewModel {
     ObservableList<String> editorLanguages;
     StringProperty successMessage;
     StringProperty errorMessage;
 
 
-    public CreateCodeSnippetViewModel(ObservableList<String> editorLanguages) {
+    public UpdateCodeSnippetViewModel(ObservableList<String> editorLanguages) {
         this.editorLanguages = editorLanguages;
         this.errorMessage = new SimpleStringProperty();
         this.successMessage = new SimpleStringProperty();

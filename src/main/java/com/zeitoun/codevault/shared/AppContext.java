@@ -9,6 +9,16 @@ package com.zeitoun.codevault.shared;
 public class AppContext {
     private String selectedFolder;
 
+    public String getSelectedSnippet() {
+        return selectedSnippet;
+    }
+
+    public void setSelectedSnippet(String selectedSnippet) {
+        this.selectedSnippet = selectedSnippet;
+    }
+
+    private String selectedSnippet;
+
     public void setSelectedFolder(String selectedFolder) {
         this.selectedFolder = selectedFolder;
     }

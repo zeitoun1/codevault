@@ -1,6 +1,16 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.usecase;
+package com.zeitoun.codevault.codesnippet.updatesnippet.usecase;
 
-public class CreateCodeSnippetInputData {
+public class UpdateCodeSnippetInputData {
+    public String getOldName() {
+        return oldName;
+    }
+
+    public String getOldFolder() {
+        return oldFolder;
+    }
+
+    private String oldName;
+    private String oldFolder;
     private String code;
     private String name;
     private String description;
@@ -9,7 +19,9 @@ public class CreateCodeSnippetInputData {
 
 
 
-    public CreateCodeSnippetInputData(String code, String name, String description, String language, String folder) {
+    public UpdateCodeSnippetInputData(String oldName, String oldFolder, String code, String name, String description, String language, String folder) {
+        this.oldName = oldName;
+        this.oldFolder = oldFolder;
         this.code = code;
         this.name = name;
         this.description = description;

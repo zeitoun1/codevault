@@ -1,9 +1,9 @@
-package com.zeitoun.codevault.codesnippet.createsnippet.usecase;
+package com.zeitoun.codevault.codesnippet.updatesnippet.usecase;
 
 /**
  * Output Boundary for the CreateCodeSnippet use case.
  */
-public interface CreateCodeSnippetOutputBoundary {
+public interface UpdateCodeSnippetOutputBoundary {
     void showSuccessMessage(String success);
     void showErrorMessage(String error);
 }

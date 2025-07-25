@@ -18,7 +18,7 @@ public class AddSnippetInteractor {
         if(snippetRepository.isMember(snippetName, selectedFolder)){
             addSnippetOutputBoundary.showErrorMessage("A snippet with that name already exists.");
         } else {
-            snippetRepository.saveSnippet(null, snippetName, null, null, selectedFolder);
+            snippetRepository.saveSnippet("", snippetName, null, null, selectedFolder);
             addSnippetOutputBoundary.addToSnippetList(snippetName);
         }
     }
