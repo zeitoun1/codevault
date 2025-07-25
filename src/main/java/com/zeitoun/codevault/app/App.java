@@ -32,8 +32,10 @@ public class App extends Application {
                 .addCreateFolderUseCase()
                 .addShowFoldersUseCase()
                 .addGetSnippetUseCase()
+                .addAddSnippetUseCase()
                 .loadFolders()
                 .build();
+
 
 
         primaryStage.setScene(scene);

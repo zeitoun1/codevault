@@ -1,5 +1,9 @@
 package com.zeitoun.codevault.app;
 
+import com.zeitoun.codevault.codesnippet.addSnippet.AddSnippetController;
+import com.zeitoun.codevault.codesnippet.addSnippet.AddSnippetInteractor;
+import com.zeitoun.codevault.codesnippet.addSnippet.AddSnippetOutputBoundary;
+import com.zeitoun.codevault.codesnippet.addSnippet.AddSnippetPresenter;
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
 import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetPresenter;
 import com.zeitoun.codevault.codesnippet.createsnippet.usecase.CreateCodeSnippetInteractor;
@@ -148,6 +152,14 @@ public class AppBuilder {
         GetSnippetInteractor getSnippetInteractor = new GetSnippetInteractor(sqLiteDataAccessObject, getSnippetOutputBoundary);
         GetSnippetController getSnippetController = new GetSnippetController(getSnippetInteractor, appContext);
         snippetsPaneView.setGetSnippetController(getSnippetController);
+        return this;
+    }
+
+    public AppBuilder addAddSnippetUseCase(){
+        AddSnippetOutputBoundary addSnippetOutputBoundary = new AddSnippetPresenter(snippetsPaneViewModel);
+        AddSnippetInteractor addSnippetInteractor = new AddSnippetInteractor(addSnippetOutputBoundary, sqLiteDataAccessObject);
+        AddSnippetController addSnippetController = new AddSnippetController(addSnippetInteractor, appContext);
+        snippetsPaneView.setAddSnippetController(addSnippetController);
         return this;
     }
 

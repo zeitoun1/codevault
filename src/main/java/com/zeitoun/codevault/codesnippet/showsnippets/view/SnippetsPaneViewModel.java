@@ -1,6 +1,8 @@
 package com.zeitoun.codevault.codesnippet.showsnippets.view;
 
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -8,6 +10,7 @@ import java.util.List;
 
 public class SnippetsPaneViewModel {
     ObservableList<String> snippetsList = new SimpleListProperty<>(FXCollections.observableArrayList());
+    StringProperty errorMessage = new SimpleStringProperty();
 
     public ObservableList<String> getSnippets() {
         return snippetsList;

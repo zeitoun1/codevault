@@ -1,7 +1,6 @@
 package com.zeitoun.codevault.folder.view;
 
 import com.zeitoun.codevault.app.SceneManager;
-import com.zeitoun.codevault.codesnippet.createsnippet.interfaceadapter.CreateCodeSnippetController;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
 import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsController;
@@ -64,7 +63,7 @@ public class FoldersPaneView {
             }
         });
 
-        // close nameBox when user removes focus from nameBox
+        // hide nameBox when user removes focus from nameBox
         nameBox.focusedProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
