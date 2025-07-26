@@ -84,7 +84,7 @@ public class AppBuilder {
         languages.setAll(Arrays.asList("c", "c++", "python", "java"));
         updateCodeSnippetViewModel = new UpdateCodeSnippetViewModel(languages);
         getSnippetViewModel = new GetSnippetViewModel();
-        updateCodeSnippetView = new UpdateCodeSnippetView(updateCodeSnippetViewModel, getSnippetViewModel, snippetsPaneViewModel);
+        updateCodeSnippetView = new UpdateCodeSnippetView(updateCodeSnippetViewModel, getSnippetViewModel);
         updateCodeSnippetView.setSceneManager(sceneManager);
         sceneManager.addNode(updateCodeSnippetView.getName(), updateCodeSnippetView.getRoot());
         return this;

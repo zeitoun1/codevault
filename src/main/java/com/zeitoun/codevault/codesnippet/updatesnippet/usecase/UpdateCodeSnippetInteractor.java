@@ -25,14 +25,12 @@ public class UpdateCodeSnippetInteractor {
     }
 
     public void execute(UpdateCodeSnippetInputData newSnippet) {
-        if(newSnippet.getName().isEmpty()) {
-          this.updateCodeSnippetOutputBoundary.showErrorMessage("Snippet name is missing.");
-        } else if (newSnippet.getLanguage() == null) {
+        if (newSnippet.getLanguage() == null) {
             this.updateCodeSnippetOutputBoundary.showErrorMessage("Language is missing.");
         } else if (newSnippet.getFolder() == null) {
             this.updateCodeSnippetOutputBoundary.showErrorMessage("folder is missing");
         } else {
-            this.repository.updateSnippet(newSnippet.getOldName(), newSnippet.getOldFolder(), newSnippet.getCode(), newSnippet.getName(), newSnippet.getDescription(), newSnippet.getLanguage(), newSnippet.getFolder());
+            this.repository.updateSnippet(newSnippet.getSelectedSnippet(), newSnippet.getSelectedFolder(), newSnippet.getCode(), newSnippet.getDescription(), newSnippet.getLanguage());
             this.updateCodeSnippetOutputBoundary.showSuccessMessage("Snippet saved successfully.");
         }
     }

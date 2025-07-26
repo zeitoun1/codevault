@@ -17,12 +17,12 @@ public class UpdateCodeSnippetPresenter implements UpdateCodeSnippetOutputBounda
 
     @Override
     public void showSuccessMessage(String success) {
-        updateCodeSnippetViewModel.setSuccessMessage(success);
+        updateCodeSnippetViewModel.successMessageProperty().setValue(success);
     }
 
     @Override
     public void showErrorMessage(String error) {
-        updateCodeSnippetViewModel.setErrorMessage(error);
+        updateCodeSnippetViewModel.errorMessageProperty().setValue(error);
     }
 
     public UpdateCodeSnippetViewModel getCreateCodeSnippetViewModel() {

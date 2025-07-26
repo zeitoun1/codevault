@@ -17,8 +17,8 @@ public class UpdateCodeSnippetController {
         this.appContext = appContext;
     }
 
-    public void execute(String code, String name, String description, String language) {
-        final UpdateCodeSnippetInputData newSnippet = new UpdateCodeSnippetInputData(appContext.getSelectedSnippet(), appContext.getSelectedFolder(), code, name, description, language, appContext.getSelectedFolder());
+    public void execute(String code, String description, String language) {
+        final UpdateCodeSnippetInputData newSnippet = new UpdateCodeSnippetInputData(appContext.getSelectedSnippet(), appContext.getSelectedFolder(), code, description, language, appContext.getSelectedFolder());
         this.updateCodeSnippetInteractor.execute(newSnippet);
     }
 

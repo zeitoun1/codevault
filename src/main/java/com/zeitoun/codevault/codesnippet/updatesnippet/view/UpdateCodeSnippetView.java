@@ -10,6 +10,8 @@ import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel
 import eu.mihosoft.monacofx.MonacoFX;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -20,7 +22,6 @@ import javafx.scene.text.Font;
 public class UpdateCodeSnippetView {
     private final VBox root;
     private final AnchorPane topNode;
-    private final TextField nameBox;
     private final ComboBox<String> languageBox;
     private final StackPane stackPane;
     
@@ -36,27 +37,20 @@ public class UpdateCodeSnippetView {
 
     private final UpdateCodeSnippetViewModel updateCodeSnippetViewModel;
     private final GetSnippetViewModel getSnippetViewModel;
-    private final SnippetsPaneViewModel snippetsPaneViewModel;
 
 
     private SceneManager sceneManager;
     private final String name = "create snippet";
 
-    public UpdateCodeSnippetView(UpdateCodeSnippetViewModel updateCodeSnippetViewModel, GetSnippetViewModel getSnippetViewModel, SnippetsPaneViewModel snippetsPaneViewModel) {
+    public UpdateCodeSnippetView(UpdateCodeSnippetViewModel updateCodeSnippetViewModel, GetSnippetViewModel getSnippetViewModel) {
         this.updateCodeSnippetViewModel = updateCodeSnippetViewModel;
         this.getSnippetViewModel = getSnippetViewModel;
-        this.snippetsPaneViewModel = snippetsPaneViewModel;
         // initializing snippetNode (where snippet creations takes place and where the contents of snippets are viewed)
 
-        // top node
-        nameBox = new TextField();
-        nameBox.setPrefWidth(1000);
-        nameBox.setPromptText("Snippet name");
-        nameBox.setFont(new Font(20));
 
         languageBox = new ComboBox<>(updateCodeSnippetViewModel.getEditorLanguages());
 
-        topNode = new AnchorPane(this.nameBox, this.languageBox);
+        topNode = new AnchorPane(this.languageBox);
         AnchorPane.setTopAnchor(languageBox, 2.0);
         AnchorPane.setRightAnchor(languageBox, 20.0);
 
@@ -96,41 +90,46 @@ public class UpdateCodeSnippetView {
         saveButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                updateCodeSnippetController.execute(editorNode.getEditor().getDocument().getText(), nameBox.getText(), descriptionBox.getText(), languageBox.getValue());
+                updateCodeSnippetController.execute(editorNode.getEditor().getDocument().getText(), descriptionBox.getText(), languageBox.getValue());
+
             }
         });
 
         // showing error message when CreateCodeSnippet is unsuccessful
-        updateCodeSnippetViewModel.errorMessageProperty().addListener(new InvalidationListener() {
+        updateCodeSnippetViewModel.errorMessageProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void invalidated(Observable observable) {
-                Alert errorDialog = new Alert(Alert.AlertType.ERROR);
-                errorDialog.setTitle("Error");
-                errorDialog.setContentText(updateCodeSnippetViewModel.getErrorMessage());
-                errorDialog.showAndWait();
+            public void changed(ObservableValue<? extends String> observableValue, String oldVal, String newVal) {
+                if(!newVal.isEmpty()) {
+                    Alert errorDialog = new Alert(Alert.AlertType.ERROR);
+                    errorDialog.setTitle("Error");
+                    errorDialog.setContentText(updateCodeSnippetViewModel.errorMessageProperty().getValue()); // revalidates error message
+                    errorDialog.showAndWait();
+                    updateCodeSnippetViewModel.errorMessageProperty().setValue("");
+                }
+
             }
         });
 
         // showing success message when CreateCodeSnippet use case is successful
-        updateCodeSnippetViewModel.successMessageProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                toastNotification.setText(updateCodeSnippetViewModel.getSuccessMessage());
+        updateCodeSnippetViewModel.successMessageProperty().addListener((observableValue, oldVal, newVal) -> {
+            if(!newVal.isEmpty()){
+                toastNotification.setText(updateCodeSnippetViewModel.successMessageProperty().getValue());
                 toastNotification.showAndHide(2000);
+                updateCodeSnippetViewModel.successMessageProperty().setValue("");
+
             }
+
         });
 
         // Updating the UI elements in the snippetNode to get the selected snippet
-        getSnippetViewModel.getNameProperty().
-                addListener(new InvalidationListener() {
-                    @Override
-                    public void invalidated (Observable observable) {
-                        nameBox.setText(getSnippetViewModel.getName());
-                        editorNode.getEditor().getDocument().setText(getSnippetViewModel.getCode());
-                        descriptionBox.setText(getSnippetViewModel.getDescription());
-                        languageBox.setValue(getSnippetViewModel.getLanguage());
-                    }
-                });
+        getSnippetViewModel.getNameProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                editorNode.getEditor().getDocument().setText(getSnippetViewModel.getCode());
+                descriptionBox.setText(getSnippetViewModel.getDescription());
+                languageBox.setValue(getSnippetViewModel.getLanguage());
+            }
+        });
     }
 
     public VBox getRoot() {

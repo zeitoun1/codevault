@@ -12,6 +12,6 @@ public interface SnippetRepository {
     Boolean isMember(String name, String language);
     List<String> getSnippets(String selectedFolder);
     CodeSnippet getSnippet(String name, String selectedFolder);
-    void updateSnippet(String oldName, String oldFolder, String code, String name, String description, String language, String folder);
+    void updateSnippet(String selectedSnippet, String selectedFolder, String code, String description, String language);
 
 }

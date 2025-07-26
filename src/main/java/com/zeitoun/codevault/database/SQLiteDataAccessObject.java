@@ -83,21 +83,20 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
     }
 
     @Override
-    public void updateSnippet(String oldName, String oldFolder, String code, String name, String description, String language, String folder) {
-        String query = "UPDATE " + snippetsTable + " SET name=?, code=?, description=?, language=?, folder=? WHERE name=? AND folder=?";
+    public void updateSnippet(String selectedSnippet, String selectedFolder, String code, String description, String language) {
+        String query = "UPDATE " + snippetsTable + " SET code=?, description=?, language=? WHERE name=? AND folder=?";
         try (PreparedStatement statement =  connection.prepareStatement(query)) {
-            statement.setString(1, name);
-            statement.setString(2, code);
-            statement.setString(3, description);
-            statement.setString(4, language);
-            statement.setString(5, folder);
-            statement.setString(6, oldName);
-            statement.setString(7, oldFolder);
+            statement.setString(1, code);
+            statement.setString(2, description);
+            statement.setString(3, language);
+            statement.setString(4, selectedSnippet);
+            statement.setString(5, selectedFolder);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public void createSnippetsTable() {
         String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), folder VARCHAR(30), PRIMARY KEY(name, folder));" ;

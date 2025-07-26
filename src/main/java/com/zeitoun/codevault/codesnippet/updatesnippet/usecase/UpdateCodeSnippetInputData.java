@@ -1,29 +1,27 @@
 package com.zeitoun.codevault.codesnippet.updatesnippet.usecase;
 
 public class UpdateCodeSnippetInputData {
-    public String getOldName() {
-        return oldName;
+    public String getSelectedSnippet() {
+        return selectedSnippet;
     }
 
-    public String getOldFolder() {
-        return oldFolder;
+    public String getSelectedFolder() {
+        return selectedFolder;
     }
 
-    private String oldName;
-    private String oldFolder;
-    private String code;
-    private String name;
-    private String description;
-    private String language;
+    private final String selectedSnippet;
+    private final String selectedFolder;
+    private final String code;
+    private final String description;
+    private final String language;
     private String folder;
 
 
 
-    public UpdateCodeSnippetInputData(String oldName, String oldFolder, String code, String name, String description, String language, String folder) {
-        this.oldName = oldName;
-        this.oldFolder = oldFolder;
+    public UpdateCodeSnippetInputData(String selectedSnippet, String selectedFolder, String code, String description, String language, String folder) {
+        this.selectedSnippet = selectedSnippet;
+        this.selectedFolder = selectedFolder;
         this.code = code;
-        this.name = name;
         this.description = description;
         this.language = language;
         this.folder = folder;
@@ -33,32 +31,12 @@ public class UpdateCodeSnippetInputData {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getLanguage() {
         return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
     }
 
     public String getFolder() {

@@ -27,7 +27,7 @@ public class UpdateCodeSnippetViewModel {
     }
 
     public String getErrorMessage() {
-        return errorMessage.get();
+        return errorMessage.getValue();
     }
 
     public StringProperty errorMessageProperty() {
@@ -35,18 +35,12 @@ public class UpdateCodeSnippetViewModel {
     }
 
     public String getSuccessMessage() {
-        return successMessage.get();
+        return successMessage.getValue();
     }
 
     public StringProperty successMessageProperty() {
         return successMessage;
     }
 
-    public void setSuccessMessage(String successMessage) {
-        this.successMessage.setValue(successMessage);
-    }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage.setValue(errorMessage);
-    }
 }
