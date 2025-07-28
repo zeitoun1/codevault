@@ -1,0 +1,14 @@
+#add-button {
+    -fx-background-radius: 60%;
+    -fx-pref-width: 45px;
+    -fx-pref-height: 45px;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+
+.label {
+    -fx-font-family: "Consolas";
+    -fx-font-size: 18px;
+
+}

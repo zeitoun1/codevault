@@ -1,5 +1,6 @@
 package com.zeitoun.codevault.app;
 
+import atlantafx.base.theme.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -36,9 +37,8 @@ public class App extends Application {
                 .loadFolders()
                 .build();
 
-
-
         primaryStage.setScene(scene);
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/style.css")).toExternalForm());
         primaryStage.setTitle("Code Vault");
         primaryStage.show();

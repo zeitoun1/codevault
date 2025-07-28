@@ -14,6 +14,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -21,8 +22,9 @@ import javafx.scene.text.Font;
 
 public class UpdateCodeSnippetView {
     private final VBox root;
-    private final AnchorPane topNode;
+    private final HBox topNode;
     private final ComboBox<String> languageBox;
+    private final Label languageLabel;
     private final StackPane stackPane;
     
     private final MonacoFX editorNode;
@@ -49,11 +51,11 @@ public class UpdateCodeSnippetView {
 
 
         languageBox = new ComboBox<>(updateCodeSnippetViewModel.getEditorLanguages());
+        languageLabel = new Label("Language:");
 
-        topNode = new AnchorPane(this.languageBox);
-        AnchorPane.setTopAnchor(languageBox, 2.0);
-        AnchorPane.setRightAnchor(languageBox, 20.0);
-
+        topNode = new HBox(languageLabel, this.languageBox);
+        topNode.setAlignment(Pos.CENTER_RIGHT);
+        topNode.setSpacing(5.0);
         // stackPane
         editorNode = new MonacoFX();
         editorNode.getEditor().setCurrentTheme("vs-dark");

@@ -35,6 +35,12 @@
             <version>0.0.8</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/io.github.mkpaz/atlantafx-base -->
+        <dependency>
+            <groupId>io.github.mkpaz</groupId>
+            <artifactId>atlantafx-base</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
     </dependencies>
     <build>

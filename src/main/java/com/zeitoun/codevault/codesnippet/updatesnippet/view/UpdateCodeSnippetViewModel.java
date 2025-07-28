@@ -26,16 +26,8 @@ public class UpdateCodeSnippetViewModel {
         this.editorLanguages.setAll(editorLanguages);
     }
 
-    public String getErrorMessage() {
-        return errorMessage.getValue();
-    }
-
     public StringProperty errorMessageProperty() {
         return errorMessage;
-    }
-
-    public String getSuccessMessage() {
-        return successMessage.getValue();
     }
 
     public StringProperty successMessageProperty() {
