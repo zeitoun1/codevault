@@ -1,7 +1,7 @@
 package com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter;
 
 import com.zeitoun.codevault.codesnippet.updatesnippet.usecase.UpdateCodeSnippetOutputBoundary;
-import com.zeitoun.codevault.codesnippet.updatesnippet.view.UpdateCodeSnippetViewModel;
+import com.zeitoun.codevault.codesnippet.view.UpdateCodeSnippetViewModel;
 
 /**
  * A Presenter for creating code snippets

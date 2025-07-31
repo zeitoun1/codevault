@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.showsnippets.view;
+package com.zeitoun.codevault.snippetspane.view;
 
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;

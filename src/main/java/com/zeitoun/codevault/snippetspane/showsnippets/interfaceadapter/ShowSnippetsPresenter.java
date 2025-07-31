@@ -1,7 +1,7 @@
-package com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter;
+package com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter;
 
-import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsOutputBoundary;
-import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel;
+import com.zeitoun.codevault.snippetspane.showsnippets.usecase.ShowSnippetsOutputBoundary;
+import com.zeitoun.codevault.snippetspane.view.SnippetsPaneViewModel;
 
 import java.util.List;
 

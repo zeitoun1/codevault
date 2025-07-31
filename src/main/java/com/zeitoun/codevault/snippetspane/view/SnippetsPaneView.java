@@ -1,8 +1,8 @@
-package com.zeitoun.codevault.codesnippet.showsnippets.view;
+package com.zeitoun.codevault.snippetspane.view;
 
 import com.zeitoun.codevault.app.SceneManager;
-import com.zeitoun.codevault.codesnippet.addSnippet.AddSnippetController;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
+import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -13,8 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 

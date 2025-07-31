@@ -1,7 +1,7 @@
-package com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter;
+package com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter;
 
-import com.zeitoun.codevault.codesnippet.showsnippets.usecase.ShowSnippetsInteractor;
 import com.zeitoun.codevault.shared.AppContext;
+import com.zeitoun.codevault.snippetspane.showsnippets.usecase.ShowSnippetsInteractor;
 
 public class ShowSnippetsController {
 

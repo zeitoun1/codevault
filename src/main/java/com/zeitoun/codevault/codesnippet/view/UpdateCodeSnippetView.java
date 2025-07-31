@@ -1,15 +1,12 @@
-package com.zeitoun.codevault.codesnippet.updatesnippet.view;
+package com.zeitoun.codevault.codesnippet.view;
 
 import com.zeitoun.codevault.ToastNotification;
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter.UpdateCodeSnippetController;
 import com.zeitoun.codevault.codesnippet.getsnippet.GetSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
-import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsController;
-import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel;
+import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import eu.mihosoft.monacofx.MonacoFX;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;

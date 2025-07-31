@@ -3,7 +3,7 @@ package com.zeitoun.codevault.folder.view;
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
-import com.zeitoun.codevault.codesnippet.showsnippets.interfaceadapter.ShowSnippetsController;
+import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;

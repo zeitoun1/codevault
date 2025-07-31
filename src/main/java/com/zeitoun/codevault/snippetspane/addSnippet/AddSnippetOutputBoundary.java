@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.addSnippet;
+package com.zeitoun.codevault.snippetspane.addSnippet;
 
 public interface AddSnippetOutputBoundary {
     void addToSnippetList(String snippetName);

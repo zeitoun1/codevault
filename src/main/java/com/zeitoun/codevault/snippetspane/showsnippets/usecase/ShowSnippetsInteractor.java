@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.showsnippets.usecase;
+package com.zeitoun.codevault.snippetspane.showsnippets.usecase;
 
 import com.zeitoun.codevault.database.SnippetRepository;
 import com.zeitoun.codevault.shared.AppContext;

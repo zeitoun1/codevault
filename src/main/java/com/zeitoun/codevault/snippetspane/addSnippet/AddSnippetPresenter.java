@@ -1,8 +1,8 @@
-package com.zeitoun.codevault.codesnippet.addSnippet;
+package com.zeitoun.codevault.snippetspane.addSnippet;
 
-import com.zeitoun.codevault.codesnippet.showsnippets.view.SnippetsPaneViewModel;
+import com.zeitoun.codevault.snippetspane.view.SnippetsPaneViewModel;
 
-public class AddSnippetPresenter implements AddSnippetOutputBoundary{
+public class AddSnippetPresenter implements AddSnippetOutputBoundary {
     private final SnippetsPaneViewModel snippetsPaneViewModel;
 
     public AddSnippetPresenter(SnippetsPaneViewModel snippetsPaneViewModel){

@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.codesnippet.showsnippets.usecase;
+package com.zeitoun.codevault.snippetspane.showsnippets.usecase;
 
 import java.util.List;
 
