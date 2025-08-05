@@ -22,10 +22,12 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         this.foldersTable = foldersTable;
     }
 
+    // snippet methods
+
     @Override
     public void saveSnippet(String code, String name, String description, String language, String folder) {
        String query = "INSERT INTO " + snippetsTable + " VALUES(?, ?, ?, ?, ?);";
-        try(PreparedStatement statement = connection.prepareStatement(query);) {
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, code);
             statement.setString(2, name);
             statement.setString(3, description);
@@ -35,7 +37,6 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return;
     }
 
     @Override
@@ -97,38 +98,17 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         }
     }
 
-
-    public void createSnippetsTable() {
-        String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), folder VARCHAR(30), PRIMARY KEY(name, folder));" ;
-
-        try(PreparedStatement statement = connection.prepareStatement(query);) {
-            statement.executeUpdate();
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void createFoldersTable() {
-        String query = "CREATE TABLE IF NOT EXISTS " + foldersTable + " (name VARCHAR(30));" ;
-        try(PreparedStatement statement = connection.prepareStatement(query);) {
-            statement.executeUpdate();
-        } catch(SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    // folder methods
 
     @Override
     public void addFolder(String name) {
         String query = "INSERT INTO " + foldersTable + " VALUES(?);";
-        try(PreparedStatement statement = connection.prepareStatement(query);) {
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, name);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return;
     }
 
     @Override
@@ -159,7 +139,53 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
 
     }
 
+    @Override
+    public void renameFolder(String oldName, String newName) {
+        String folderTableQuery = "UPDATE " + foldersTable + " SET name=? WHERE name=?";
+        String snippetsTableQuery = "UPDATE " + snippetsTable + " SET folder=? WHERE folder=?";
+
+        try(PreparedStatement folderStatement = connection.prepareStatement(folderTableQuery);
+            PreparedStatement snippetStatement = connection.prepareStatement(snippetsTableQuery))
+        {
+            connection.setAutoCommit(false);
+            folderStatement.setString(1, newName);
+            folderStatement.setString(2, oldName);
+            snippetStatement.setString(1, newName);
+            snippetStatement.setString(2, oldName);
+
+            folderStatement.executeUpdate();
+            snippetStatement.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    // Helper methods
+
     public Connection getConnection() {
         return connection;
+    }
+
+    public void createSnippetsTable() {
+        String query = "CREATE TABLE IF NOT EXISTS " + snippetsTable + " (code TEXT, name VARCHAR(30), description VARCHAR(100), language VARCHAR(30), folder VARCHAR(30), PRIMARY KEY(name, folder));" ;
+
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public void createFoldersTable() {
+        String query = "CREATE TABLE IF NOT EXISTS " + foldersTable + " (name VARCHAR(30));" ;
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

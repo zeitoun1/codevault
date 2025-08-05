@@ -32,6 +32,7 @@ public class App extends Application {
                 .addCreateCodeSnippetUseCase()
                 .addCreateFolderUseCase()
                 .addShowFoldersUseCase()
+                .addRenameFolderUseCase()
                 .addGetSnippetUseCase()
                 .addAddSnippetUseCase()
                 .loadFolders()

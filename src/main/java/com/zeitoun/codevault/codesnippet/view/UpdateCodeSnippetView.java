@@ -5,8 +5,8 @@ import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter.UpdateCodeSnippetController;
 import com.zeitoun.codevault.codesnippet.getsnippet.GetSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
-import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import eu.mihosoft.monacofx.MonacoFX;
+import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -19,7 +19,6 @@ import javafx.scene.text.Font;
 
 public class UpdateCodeSnippetView {
     private final VBox root;
-    private final HBox topNode;
     private final ComboBox<String> languageBox;
     private final Label languageLabel;
     private final StackPane stackPane;
@@ -47,12 +46,7 @@ public class UpdateCodeSnippetView {
         // initializing snippetNode (where snippet creations takes place and where the contents of snippets are viewed)
 
 
-        languageBox = new ComboBox<>(updateCodeSnippetViewModel.getEditorLanguages());
-        languageLabel = new Label("Language:");
 
-        topNode = new HBox(languageLabel, this.languageBox);
-        topNode.setAlignment(Pos.CENTER_RIGHT);
-        topNode.setSpacing(5.0);
         // stackPane
         editorNode = new MonacoFX();
         editorNode.getEditor().setCurrentTheme("vs-dark");
@@ -66,15 +60,17 @@ public class UpdateCodeSnippetView {
 
 
         // bottom node
+        languageBox = new ComboBox<>(updateCodeSnippetViewModel.getEditorLanguages());
+        languageLabel = new Label("Language:");
         descriptionBox = new TextArea();
         descriptionBox.setPromptText("Description");
         descriptionBox.setFont(new Font(18));
 
         saveButton = new Button("Save");
         saveButton.setFont(new Font(18.0));
-        bottomNode = new HBox(descriptionBox, saveButton);
+        bottomNode = new HBox(descriptionBox, languageLabel, this.languageBox, saveButton);
 
-        root = new VBox(topNode, stackPane, bottomNode);
+        root = new VBox(stackPane, bottomNode);
 
 
         // selecting language in editor when creating a snippet

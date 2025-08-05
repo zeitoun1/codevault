@@ -2,7 +2,9 @@ package com.zeitoun.codevault.folder.view;
 
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
+import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderController;
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
+import com.zeitoun.codevault.shared.CustomListView;
 import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -16,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -30,16 +33,21 @@ public class FoldersPaneView {
     private final Button addButton;
     private final TextField nameBox;
 
+    private final ContextMenu contextMenu;
+    private final Button renameButton;
+    private final Button deleteButton;
+
     private final FoldersPaneViewModel foldersPaneViewModel;
 
+    private CreateFolderController createFolderController;
     private ShowFoldersController showFoldersController;
     private ShowSnippetsController showSnippetsController;
+    private RenameFolderController renameFolderController;
 
     private final String name = "folders pane";
 
     private SceneManager sceneManager;
 
-    private CreateFolderController createFolderController;
 
     public FoldersPaneView(FoldersPaneViewModel foldersPaneViewModel) {
         this.foldersPaneViewModel = new FoldersPaneViewModel();
@@ -49,6 +57,7 @@ public class FoldersPaneView {
         Image addImg = new Image(Objects.requireNonNull(getClass().getResource("/add_button.png")).toExternalForm());
         ImageView addImageView = new ImageView(addImg);
         addImageView.setPreserveRatio(true);
+        addImageView.setSmooth(true);
         addImageView.fitHeightProperty().bind(addButton.prefHeightProperty());
         addButton.setGraphic(addImageView);
 
@@ -58,27 +67,17 @@ public class FoldersPaneView {
 
         this.foldersPane = new ListView<String>(foldersPaneViewModel.getFolders());
         Image folderIcon = new Image(Objects.requireNonNull(getClass().getResource("/light_theme_folder.png")).toExternalForm());
+        foldersPane.setEditable(true);
 
-        foldersPane.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        this.renameButton = new Button("rename");
+        this.deleteButton = new Button("delete");
+        this.contextMenu = new ContextMenu(new CustomMenuItem(renameButton), new CustomMenuItem(deleteButton));
+        foldersPane.setContextMenu(contextMenu);
+
+        foldersPane.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (empty || item == null) {
-                           setText(null);
-                           setGraphic(null);
-                        } else {
-                            final ImageView imageView = new ImageView(folderIcon);
-                            imageView.setPreserveRatio(true);
-                            imageView.fitHeightProperty().bind(heightProperty().multiply(0.5));
-                            setText(item);
-                            setGraphic(imageView);
-                        }
-                    }
-                };
+                return new CustomListView(folderIcon, new TextField());
             }
         });
 
@@ -124,18 +123,57 @@ public class FoldersPaneView {
             }
         });
 
+        foldersPane.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
+            @Override
+            public void handle(ListView.EditEvent<String> stringEditEvent) {
+                int editedIndex = stringEditEvent.getIndex();
+                String newFolderName = stringEditEvent.getNewValue();
+                renameFolderController.renameFolder(editedIndex, newFolderName);
+
+            }
+        });
+
+        // on right-click on a folder, open context menu
+        foldersPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.isSecondaryButtonDown()) {
+                    contextMenu.show(foldersPane, mouseEvent.getX(), mouseEvent.getY());
+                }
+            }
+        });
+
+        // on click of rename button begin editing the focused cell
+        renameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                foldersPane.edit(foldersPane.getSelectionModel().getSelectedIndex());
+            }
+        });
+
+
+
     }
 
     public VBox getRoot() {
         return root;
     }
+
     public void setCreateFolderController(CreateFolderController createFolderController) {
         this.createFolderController = createFolderController;
     }
-
     public void setShowFoldersController(ShowFoldersController showFoldersController) {
         this.showFoldersController = showFoldersController;
     }
+
+    public void setRenameFolderController(RenameFolderController renameFolderController) {
+        this.renameFolderController = renameFolderController;
+    }
+
+    public void setShowSnippetsController(ShowSnippetsController showSnippetsController) {
+        this.showSnippetsController = showSnippetsController;
+    }
+
 
     public FoldersPaneViewModel getFoldersPaneViewModel() {
         return foldersPaneViewModel;
@@ -147,10 +185,6 @@ public class FoldersPaneView {
 
     public ShowSnippetsController getShowSnippetsController() {
         return showSnippetsController;
-    }
-
-    public void setShowSnippetsController(ShowSnippetsController showSnippetsController) {
-        this.showSnippetsController = showSnippetsController;
     }
 
     public String getName() {

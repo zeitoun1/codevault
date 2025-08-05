@@ -1,5 +1,9 @@
 package com.zeitoun.codevault.app;
 
+import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderController;
+import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderPresenter;
+import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderInteractor;
+import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderOutputBoundary;
 import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetController;
 import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetInteractor;
 import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetOutputBoundary;
@@ -111,15 +115,6 @@ public class AppBuilder {
 
     // Building UseCases
 
-    public AppBuilder addCreateCodeSnippetUseCase() {
-        UpdateCodeSnippetOutputBoundary updateCodeSnippetOutputBoundary = new UpdateCodeSnippetPresenter(updateCodeSnippetViewModel);
-        UpdateCodeSnippetInteractor updateCodeSnippetInteractor = new UpdateCodeSnippetInteractor(sqLiteDataAccessObject, updateCodeSnippetOutputBoundary);
-
-        UpdateCodeSnippetController updateCodeSnippetController = new UpdateCodeSnippetController(updateCodeSnippetInteractor, appContext);
-        updateCodeSnippetView.setCreateCodeSnippetController(updateCodeSnippetController);
-        return this;
-    }
-
 
     public AppBuilder addCreateFolderUseCase() {
         CreateFolderOutputBoundary createFolderOutputBoundary = new CreateFolderPresenter(foldersPaneViewModel);
@@ -136,6 +131,23 @@ public class AppBuilder {
         ShowFoldersInteractor showFoldersInteractor = new ShowFoldersInteractor(sqLiteDataAccessObject, showFoldersOutPutBoundary);
         ShowFoldersController showFoldersController = new ShowFoldersController(showFoldersInteractor);
         foldersPaneView.setShowFoldersController(showFoldersController);
+        return this;
+    }
+
+    public AppBuilder addRenameFolderUseCase() {
+        RenameFolderOutputBoundary renameFolderOutputBoundary = new RenameFolderPresenter(foldersPaneViewModel);
+        RenameFolderInteractor renameFolderInteractor = new RenameFolderInteractor(renameFolderOutputBoundary, sqLiteDataAccessObject);
+        RenameFolderController renameFolderController = new RenameFolderController(renameFolderInteractor, appContext);
+        foldersPaneView.setRenameFolderController(renameFolderController);
+        return this;
+    }
+
+    public AppBuilder addCreateCodeSnippetUseCase() {
+        UpdateCodeSnippetOutputBoundary updateCodeSnippetOutputBoundary = new UpdateCodeSnippetPresenter(updateCodeSnippetViewModel);
+        UpdateCodeSnippetInteractor updateCodeSnippetInteractor = new UpdateCodeSnippetInteractor(sqLiteDataAccessObject, updateCodeSnippetOutputBoundary);
+
+        UpdateCodeSnippetController updateCodeSnippetController = new UpdateCodeSnippetController(updateCodeSnippetInteractor, appContext);
+        updateCodeSnippetView.setCreateCodeSnippetController(updateCodeSnippetController);
         return this;
     }
 

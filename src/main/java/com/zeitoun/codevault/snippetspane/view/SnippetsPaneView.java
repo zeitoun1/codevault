@@ -42,6 +42,7 @@ public class SnippetsPaneView {
         Image addImg = new Image(Objects.requireNonNull(getClass().getResource("/add_button.png")).toExternalForm());
         ImageView addImageView = new ImageView(addImg);
         addImageView.setPreserveRatio(true);
+        addImageView.setSmooth(true);
         addImageView.fitHeightProperty().bind(addButton.prefHeightProperty());
         addButton.setGraphic(addImageView);
 
