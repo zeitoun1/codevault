@@ -4,10 +4,10 @@ import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderCo
 import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderPresenter;
 import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderInteractor;
 import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderOutputBoundary;
-import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetController;
-import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetInteractor;
-import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetOutputBoundary;
-import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetPresenter;
+import com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter.AddSnippetController;
+import com.zeitoun.codevault.snippetspane.addsnippet.usecase.AddSnippetInteractor;
+import com.zeitoun.codevault.snippetspane.addsnippet.usecase.AddSnippetOutputBoundary;
+import com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter.AddSnippetPresenter;
 import com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter.UpdateCodeSnippetController;
 import com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter.UpdateCodeSnippetPresenter;
 import com.zeitoun.codevault.codesnippet.updatesnippet.usecase.UpdateCodeSnippetInteractor;
@@ -31,6 +31,10 @@ import com.zeitoun.codevault.folder.showfolders.usecase.ShowFoldersOutPutBoundar
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersPresenter;
 import com.zeitoun.codevault.folder.view.FoldersPaneView;
 import com.zeitoun.codevault.folder.view.FoldersPaneViewModel;
+import com.zeitoun.codevault.snippetspane.renamesnippet.interfaceadapter.RenameSnippetController;
+import com.zeitoun.codevault.snippetspane.renamesnippet.interfaceadapter.RenameSnippetPresenter;
+import com.zeitoun.codevault.snippetspane.renamesnippet.usecase.RenameSnippetInteractor;
+import com.zeitoun.codevault.snippetspane.renamesnippet.usecase.RenameSnippetOutputBoundary;
 import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsPresenter;
 import com.zeitoun.codevault.snippetspane.showsnippets.usecase.ShowSnippetsInteractor;
@@ -167,11 +171,19 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addAddSnippetUseCase(){
+    public AppBuilder addAddSnippetUseCase() {
         AddSnippetOutputBoundary addSnippetOutputBoundary = new AddSnippetPresenter(snippetsPaneViewModel);
         AddSnippetInteractor addSnippetInteractor = new AddSnippetInteractor(addSnippetOutputBoundary, sqLiteDataAccessObject);
         AddSnippetController addSnippetController = new AddSnippetController(addSnippetInteractor, appContext);
         snippetsPaneView.setAddSnippetController(addSnippetController);
+        return this;
+    }
+
+    public AppBuilder addRenameSnippetUseCase() {
+        RenameSnippetOutputBoundary renameSnippetOutputBoundary = new RenameSnippetPresenter(snippetsPaneViewModel);
+        RenameSnippetInteractor renameSnippetInteractor = new RenameSnippetInteractor(renameSnippetOutputBoundary, sqLiteDataAccessObject);
+        RenameSnippetController renameSnippetController = new RenameSnippetController(renameSnippetInteractor, appContext);
+        snippetsPaneView.setRenameSnippetController(renameSnippetController);
         return this;
     }
 

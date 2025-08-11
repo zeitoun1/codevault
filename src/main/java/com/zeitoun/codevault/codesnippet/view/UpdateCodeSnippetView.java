@@ -16,6 +16,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
+
 
 public class UpdateCodeSnippetView {
     private final VBox root;
@@ -95,11 +98,11 @@ public class UpdateCodeSnippetView {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldVal, String newVal) {
                 if(!newVal.isEmpty()) {
-                    Alert errorDialog = new Alert(Alert.AlertType.ERROR);
-                    errorDialog.setTitle("Error");
-                    errorDialog.setContentText(updateCodeSnippetViewModel.errorMessageProperty().getValue()); // revalidates error message
-                    errorDialog.showAndWait();
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText(updateCodeSnippetViewModel.errorMessageProperty().getValue()); // revalidates error message
                     updateCodeSnippetViewModel.errorMessageProperty().setValue("");
+                    alert.show();
                 }
 
             }
@@ -108,10 +111,10 @@ public class UpdateCodeSnippetView {
         // showing success message when CreateCodeSnippet use case is successful
         updateCodeSnippetViewModel.successMessageProperty().addListener((observableValue, oldVal, newVal) -> {
             if(!newVal.isEmpty()){
-                toastNotification.setText(updateCodeSnippetViewModel.successMessageProperty().getValue());
-                toastNotification.showAndHide(2000);
+                ToastNotification notification = new ToastNotification(stackPane);
+                notification.setText(updateCodeSnippetViewModel.successMessageProperty().getValue());
                 updateCodeSnippetViewModel.successMessageProperty().setValue("");
-
+                notification.showAndHide(1000);
             }
 
         });

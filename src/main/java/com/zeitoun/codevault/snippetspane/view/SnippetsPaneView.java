@@ -2,7 +2,9 @@ package com.zeitoun.codevault.snippetspane.view;
 
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
-import com.zeitoun.codevault.snippetspane.addSnippet.AddSnippetController;
+import com.zeitoun.codevault.shared.CustomListView;
+import com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter.AddSnippetController;
+import com.zeitoun.codevault.snippetspane.renamesnippet.interfaceadapter.RenameSnippetController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -12,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
@@ -26,11 +29,17 @@ public class SnippetsPaneView {
     private final Button addButton;
     private final TextField nameBox;
 
+    private final ContextMenu contextMenu;
+    private final Button renameButton;
+    private final Button deleteButton;
+
     private final SnippetsPaneViewModel snippetsPaneViewModel;
     private GetSnippetController getSnippetController;
     private AddSnippetController addSnippetController;
-    private SceneManager sceneManager;
 
+    private RenameSnippetController renameSnippetController;
+
+    private SceneManager sceneManager;
     private final String name = "snippets pane";
 
     public SnippetsPaneView(SnippetsPaneViewModel snippetsPaneViewModel) {
@@ -52,39 +61,26 @@ public class SnippetsPaneView {
         nameBox.setPromptText("Snippet Name");
         nameBox.setVisible(false);
 
-        Image code_icon = new Image(Objects.requireNonNull(getClass().getResource("/light_theme_code_snippet.png")).toExternalForm());
+
+        Image codeIcon = new Image(Objects.requireNonNull(getClass().getResource("/light_theme_code_snippet.png")).toExternalForm());
         snippetsPane = new ListView<>(this.snippetsPaneViewModel.getSnippets());
-        snippetsPane.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+        snippetsPane.setEditable(true);
+
+        snippetsPane.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new ListCell<>() {
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-
-                        if (empty || item == null) {
-                            setText(null);
-                            setGraphic(null);
-                        } else {
-                            final ImageView imageView = new ImageView(code_icon);
-                            imageView.setPreserveRatio(true);
-                            imageView.fitHeightProperty().bind(heightProperty().multiply(0.55));
-                            setText(item);
-                            setGraphic(imageView);
-                        }
-                    }
-                };
+                return new CustomListView(codeIcon, new TextField());
             }
         });
+
+        this.renameButton = new Button("rename");
+        this.deleteButton = new Button("delete");
+        this.contextMenu = new ContextMenu(new CustomMenuItem(renameButton), new CustomMenuItem(deleteButton));
+        snippetsPane.setContextMenu(contextMenu);
+
 
         root = new VBox(topBox, nameBox, snippetsPane);
 
-        snippetsPane.getSelectionModel().selectedItemProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                getSnippetController.getSnippet(snippetsPane.getSelectionModel().getSelectedItem());
-            }
-        });
 
         nameBox.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -98,19 +94,55 @@ public class SnippetsPaneView {
             }
         });
 
-        // show nameBox when addButton is clicked
-        addButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                nameBox.setVisible(true);
-            }
-        });
-
         // hide nameBox when user removes focus from nameBox
         nameBox.focusedProperty().addListener(new InvalidationListener() {
             @Override
             public void invalidated(Observable observable) {
                 nameBox.setVisible(nameBox.isFocused());
+            }
+        });
+
+        // show nameBox when addButton is clicked
+        addButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                nameBox.setVisible(true);
+                nameBox.requestFocus();
+            }
+        });
+
+
+        snippetsPane.getSelectionModel().selectedItemProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                getSnippetController.getSnippet(snippetsPane.getSelectionModel().getSelectedItem());
+            }
+        });
+
+        // on right-click on a folder, open context menu
+        snippetsPane.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (mouseEvent.isSecondaryButtonDown()) {
+                    contextMenu.show(snippetsPane, mouseEvent.getX(), mouseEvent.getY());
+                }
+            }
+        });
+
+        snippetsPane.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
+            @Override
+            public void handle(ListView.EditEvent<String> stringEditEvent) {
+                int editedIndex = stringEditEvent.getIndex();
+                String newFolderName = stringEditEvent.getNewValue();
+                renameSnippetController.renameSnippet(editedIndex, newFolderName);
+            }
+        });
+
+        // on click of rename button begin editing the focused cell
+        renameButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                snippetsPane.edit(snippetsPane.getSelectionModel().getSelectedIndex());
             }
         });
     }
@@ -134,5 +166,9 @@ public class SnippetsPaneView {
 
     public void setSceneManager(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
+    }
+
+    public void setRenameSnippetController(RenameSnippetController renameSnippetController) {
+        this.renameSnippetController = renameSnippetController;
     }
 }

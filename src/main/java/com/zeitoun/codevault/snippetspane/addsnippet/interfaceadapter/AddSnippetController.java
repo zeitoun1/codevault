@@ -1,6 +1,7 @@
-package com.zeitoun.codevault.snippetspane.addSnippet;
+package com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter;
 
 import com.zeitoun.codevault.shared.AppContext;
+import com.zeitoun.codevault.snippetspane.addsnippet.usecase.AddSnippetInteractor;
 
 public class AddSnippetController {
     private AddSnippetInteractor addSnippetInteractor;

@@ -13,6 +13,6 @@ public class RenameFolderController {
     }
 
     public void renameFolder(int index, String newFolderName) {
-        renameFolderInteractor.execute(index,appContext.getSelectedFolder(), newFolderName);
+        renameFolderInteractor.execute(index, appContext.getSelectedFolder(), newFolderName);
     }
 }

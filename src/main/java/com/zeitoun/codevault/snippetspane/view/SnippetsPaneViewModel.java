@@ -19,4 +19,12 @@ public class SnippetsPaneViewModel {
     public void setSnippetsList(List<String> snippetsList) {
         this.snippetsList.setAll(snippetsList);
     }
+
+    public void setError(String error) {
+        this.errorMessage.setValue(error);
+    }
+
+    public ObservableList<String> getSnippetsList() {
+        return snippetsList;
+    }
 }

@@ -18,7 +18,7 @@ import java.util.Map;
 public class SceneManager {
 
     private Scene currentScene;
-    private Map<String, Node> nodeMap = new HashMap<>();
+    private final Map<String, Node> nodeMap = new HashMap<>();
 
 
     /**

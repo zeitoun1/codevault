@@ -9,9 +9,10 @@ import java.util.List;
  */
 public interface SnippetRepository {
     void saveSnippet(String code, String name, String description, String language, String folder);
-    Boolean isMember(String name, String language);
+    Boolean isMember(String name, String folder);
     List<String> getSnippets(String selectedFolder);
     CodeSnippet getSnippet(String name, String selectedFolder);
     void updateSnippet(String selectedSnippet, String selectedFolder, String code, String description, String language);
+    void renameSnippet(String oldSnippetName, String newSnippetName, String selectedFolder);
 
 }

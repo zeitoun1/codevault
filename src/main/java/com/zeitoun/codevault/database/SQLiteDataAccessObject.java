@@ -98,6 +98,19 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         }
     }
 
+    @Override
+    public void renameSnippet(String oldSnippetName, String newSnippetName, String selectedFolder) {
+        String query = "UPDATE " + snippetsTable + " SET name=? WHERE name=? AND folder=?";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, newSnippetName);
+            statement.setString(2, oldSnippetName);
+            statement.setString(3, selectedFolder);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // folder methods
 
     @Override

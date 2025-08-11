@@ -1,5 +1,6 @@
-package com.zeitoun.codevault.snippetspane.addSnippet;
+package com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter;
 
+import com.zeitoun.codevault.snippetspane.addsnippet.usecase.AddSnippetOutputBoundary;
 import com.zeitoun.codevault.snippetspane.view.SnippetsPaneViewModel;
 
 public class AddSnippetPresenter implements AddSnippetOutputBoundary {

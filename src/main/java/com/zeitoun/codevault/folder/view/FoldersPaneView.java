@@ -90,6 +90,7 @@ public class FoldersPaneView {
             @Override
             public void handle(ActionEvent actionEvent) {
                 nameBox.setVisible(true);
+                nameBox.requestFocus();
             }
         });
 
