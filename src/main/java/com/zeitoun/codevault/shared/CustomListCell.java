@@ -7,19 +7,20 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 /**
  * A CustomListView for implementing the folder pane and snippets pane views
  * Is editable and allows
  */
-public class CustomListView extends ListCell<String> {
+public class CustomListCell extends ListCell<String> {
     private final Image icon;
     private final TextField textField;
     private final HBox hbox;
 
 
-    public CustomListView(Image icon, TextField textField) {
+    public CustomListCell(Image icon, TextField textField) {
         this.icon = icon;
         ImageView imageView = new ImageView(icon);
         imageView.setPreserveRatio(true);

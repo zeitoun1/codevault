@@ -4,7 +4,7 @@ import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
 import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderController;
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
-import com.zeitoun.codevault.shared.CustomListView;
+import com.zeitoun.codevault.shared.CustomListCell;
 import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -67,7 +67,6 @@ public class FoldersPaneView {
 
         this.foldersPane = new ListView<String>(foldersPaneViewModel.getFolders());
         Image folderIcon = new Image(Objects.requireNonNull(getClass().getResource("/light_theme_folder.png")).toExternalForm());
-        foldersPane.setEditable(true);
 
         this.renameButton = new Button("rename");
         this.deleteButton = new Button("delete");
@@ -77,7 +76,7 @@ public class FoldersPaneView {
         foldersPane.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new CustomListView(folderIcon, new TextField());
+                return new CustomListCell(folderIcon, new TextField());
             }
         });
 
@@ -148,7 +147,10 @@ public class FoldersPaneView {
         renameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                // make foldersPane editable then non-editable to disable default behaviour of editing on double-click
+                foldersPane.setEditable(true);
                 foldersPane.edit(foldersPane.getSelectionModel().getSelectedIndex());
+                foldersPane.setEditable(false);
             }
         });
 

@@ -2,7 +2,7 @@ package com.zeitoun.codevault.snippetspane.view;
 
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
-import com.zeitoun.codevault.shared.CustomListView;
+import com.zeitoun.codevault.shared.CustomListCell;
 import com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter.AddSnippetController;
 import com.zeitoun.codevault.snippetspane.deletesnippet.interfaceadapter.DeleteSnippetController;
 import com.zeitoun.codevault.snippetspane.renamesnippet.interfaceadapter.RenameSnippetController;
@@ -21,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public class SnippetsPaneView {
     private final VBox root;
@@ -71,12 +70,12 @@ public class SnippetsPaneView {
 
         Image codeIcon = new Image(Objects.requireNonNull(getClass().getResource("/light_theme_code_snippet.png")).toExternalForm());
         snippetsPane = new ListView<>(this.snippetsPaneViewModel.getSnippets());
-        snippetsPane.setEditable(true);
+
 
         snippetsPane.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> stringListView) {
-                return new CustomListView(codeIcon, new TextField());
+                return new CustomListCell(codeIcon, new TextField());
             }
         });
 
@@ -151,7 +150,9 @@ public class SnippetsPaneView {
         renameButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
+                snippetsPane.setEditable(true);
                 snippetsPane.edit(snippetsPane.getSelectionModel().getSelectedIndex());
+                snippetsPane.setEditable(false);
             }
         });
 
