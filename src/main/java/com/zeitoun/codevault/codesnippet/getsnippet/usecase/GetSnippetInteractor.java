@@ -1,7 +1,7 @@
 package com.zeitoun.codevault.codesnippet.getsnippet.usecase;
 
-import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
-import com.zeitoun.codevault.database.SnippetRepository;
+import com.zeitoun.codevault.codesnippet.entity.CodeSnippet;
+import com.zeitoun.codevault.database.repostiories.SnippetRepository;
 
 public class GetSnippetInteractor {
     private final SnippetRepository snippetRepository;

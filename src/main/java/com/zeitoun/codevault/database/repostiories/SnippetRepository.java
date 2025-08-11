@@ -1,6 +1,6 @@
-package com.zeitoun.codevault.database;
+package com.zeitoun.codevault.database.repostiories;
 
-import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
+import com.zeitoun.codevault.codesnippet.entity.CodeSnippet;
 
 import java.util.List;
 
@@ -14,5 +14,6 @@ public interface SnippetRepository {
     CodeSnippet getSnippet(String name, String selectedFolder);
     void updateSnippet(String selectedSnippet, String selectedFolder, String code, String description, String language);
     void renameSnippet(String oldSnippetName, String newSnippetName, String selectedFolder);
+    void deleteSnippet(String selectedSnippet, String selectedFolder);
 
 }

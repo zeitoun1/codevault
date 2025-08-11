@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.database;
+package com.zeitoun.codevault.database.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

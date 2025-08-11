@@ -1,6 +1,6 @@
 package com.zeitoun.codevault.snippetspane.renamesnippet.usecase;
 
-import com.zeitoun.codevault.database.SnippetRepository;
+import com.zeitoun.codevault.database.repostiories.SnippetRepository;
 
 public class RenameSnippetInteractor {
     private final RenameSnippetOutputBoundary renameSnippetOutputBoundary;

@@ -1,25 +1,27 @@
-package com.zeitoun.codevault.codesnippet.getsnippet;
+package com.zeitoun.codevault.codesnippet.entity;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
-public class GetSnippetViewModel {
-    private final StringProperty name = new SimpleStringProperty();
+/**
+ * A class representing the code snippet.
+ */
+public class CodeSnippet {
     private String code;
+    private String name;
     private String description;
     private String language;
 
-
-    public StringProperty getNameProperty() {
-        return name;
+    public CodeSnippet(String code, String name, String description, String language) {
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.language = language;
     }
 
     public String getName() {
-        return name.getValue();
+        return name;
     }
 
     public void setName(String name) {
-        this.name.setValue(name);
+        this.name = name;
     }
 
     public String getCode() {
@@ -27,7 +29,7 @@ public class GetSnippetViewModel {
     }
 
     public void setCode(String code) {
-        this.code = code;;
+        this.code = code;
     }
 
     public String getDescription() {

@@ -4,6 +4,7 @@ import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
 import com.zeitoun.codevault.shared.CustomListView;
 import com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter.AddSnippetController;
+import com.zeitoun.codevault.snippetspane.deletesnippet.interfaceadapter.DeleteSnippetController;
 import com.zeitoun.codevault.snippetspane.renamesnippet.interfaceadapter.RenameSnippetController;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -20,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public class SnippetsPaneView {
     private final VBox root;
@@ -31,12 +33,17 @@ public class SnippetsPaneView {
 
     private final ContextMenu contextMenu;
     private final Button renameButton;
+
     private final Button deleteButton;
+    private final ButtonType deleteConfirmationButton;
+    private final ButtonType cancelButton;
 
     private final SnippetsPaneViewModel snippetsPaneViewModel;
+
     private GetSnippetController getSnippetController;
     private AddSnippetController addSnippetController;
 
+    private DeleteSnippetController deleteSnippetController;
     private RenameSnippetController renameSnippetController;
 
     private SceneManager sceneManager;
@@ -75,6 +82,8 @@ public class SnippetsPaneView {
 
         this.renameButton = new Button("rename");
         this.deleteButton = new Button("delete");
+        this.deleteConfirmationButton = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+        this.cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         this.contextMenu = new ContextMenu(new CustomMenuItem(renameButton), new CustomMenuItem(deleteButton));
         snippetsPane.setContextMenu(contextMenu);
 
@@ -145,6 +154,23 @@ public class SnippetsPaneView {
                 snippetsPane.edit(snippetsPane.getSelectionModel().getSelectedIndex());
             }
         });
+
+        // on click of delete button delete the selected snippet
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this code snippet", cancelButton, deleteConfirmationButton);
+                confirmation.setHeaderText("Delete");
+                confirmation.setResizable(false);
+                confirmation.showAndWait().ifPresent(buttonType -> {
+                    if(buttonType == deleteConfirmationButton) {
+                        deleteSnippetController.deleteSnippet(snippetsPane.getSelectionModel().getSelectedIndex());
+                    } else {
+                        confirmation.close();
+                    }
+                });
+            }
+        });
     }
 
     public VBox getRoot() {
@@ -158,6 +184,10 @@ public class SnippetsPaneView {
 
     public void setAddSnippetController(AddSnippetController addSnippetController) {
         this.addSnippetController = addSnippetController;
+    }
+
+    public void setDeleteSnippetController(DeleteSnippetController deleteSnippetController) {
+        this.deleteSnippetController = deleteSnippetController;
     }
 
     public String getName() {

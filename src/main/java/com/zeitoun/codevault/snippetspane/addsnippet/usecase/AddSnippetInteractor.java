@@ -1,6 +1,6 @@
 package com.zeitoun.codevault.snippetspane.addsnippet.usecase;
 
-import com.zeitoun.codevault.database.SnippetRepository;
+import com.zeitoun.codevault.database.repostiories.SnippetRepository;
 
 /**
  * Interactor responsible for adding a snippet with just a name.

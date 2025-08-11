@@ -3,7 +3,6 @@ package com.zeitoun.codevault.codesnippet.view;
 import com.zeitoun.codevault.ToastNotification;
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.codesnippet.updatesnippet.interfaceadapter.UpdateCodeSnippetController;
-import com.zeitoun.codevault.codesnippet.getsnippet.GetSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter.GetSnippetController;
 import eu.mihosoft.monacofx.MonacoFX;
 import com.zeitoun.codevault.snippetspane.showsnippets.interfaceadapter.ShowSnippetsController;
@@ -11,13 +10,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
 
 
 public class UpdateCodeSnippetView {

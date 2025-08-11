@@ -36,6 +36,7 @@ public class App extends Application {
                 .addGetSnippetUseCase()
                 .addAddSnippetUseCase()
                 .addRenameSnippetUseCase()
+                .addDeleteSnippetUseCase()
                 .loadFolders()
                 .build();
 

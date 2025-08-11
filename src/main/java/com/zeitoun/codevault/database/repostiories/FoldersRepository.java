@@ -1,4 +1,4 @@
-package com.zeitoun.codevault.database;
+package com.zeitoun.codevault.database.repostiories;
 
 import java.util.List;
 

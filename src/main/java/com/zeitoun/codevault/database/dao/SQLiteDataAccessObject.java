@@ -1,6 +1,8 @@
-package com.zeitoun.codevault.database;
+package com.zeitoun.codevault.database.dao;
 
-import com.zeitoun.codevault.codesnippet.enitity.CodeSnippet;
+import com.zeitoun.codevault.codesnippet.entity.CodeSnippet;
+import com.zeitoun.codevault.database.repostiories.FoldersRepository;
+import com.zeitoun.codevault.database.repostiories.SnippetRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -105,6 +107,18 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
             statement.setString(1, newSnippetName);
             statement.setString(2, oldSnippetName);
             statement.setString(3, selectedFolder);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteSnippet(String selectedSnippet, String selectedFolder) {
+        String query = "DELETE FROM " + snippetsTable + " WHERE name=? AND folder=?";
+        try(PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, selectedSnippet);
+            statement.setString(2, selectedFolder);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

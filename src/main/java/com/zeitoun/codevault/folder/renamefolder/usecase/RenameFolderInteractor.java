@@ -1,6 +1,6 @@
 package com.zeitoun.codevault.folder.renamefolder.usecase;
 
-import com.zeitoun.codevault.database.FoldersRepository;
+import com.zeitoun.codevault.database.repostiories.FoldersRepository;
 
 public class RenameFolderInteractor {
     private final RenameFolderOutputBoundary renameFolderOutputBoundary;

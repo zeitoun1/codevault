@@ -1,6 +1,6 @@
 package com.zeitoun.codevault.codesnippet.getsnippet.interfaceadapter;
 
-import com.zeitoun.codevault.codesnippet.getsnippet.GetSnippetViewModel;
+import com.zeitoun.codevault.codesnippet.view.GetSnippetViewModel;
 import com.zeitoun.codevault.codesnippet.getsnippet.usecase.GetSnippetOutputBoundary;
 import com.zeitoun.codevault.codesnippet.getsnippet.usecase.GetSnippetOutputData;
 
