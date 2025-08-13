@@ -1,5 +1,9 @@
 package com.zeitoun.codevault.app;
 
+import com.zeitoun.codevault.folder.deletefolder.interfaceadapter.DeleteFolderController;
+import com.zeitoun.codevault.folder.deletefolder.interfaceadapter.DeleteFolderPresenter;
+import com.zeitoun.codevault.folder.deletefolder.usecase.DeleteFolderInteractor;
+import com.zeitoun.codevault.folder.deletefolder.usecase.DeleteFolderOutputBoundary;
 import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderController;
 import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderPresenter;
 import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderInteractor;
@@ -196,6 +200,14 @@ public class AppBuilder {
         DeleteSnippetInteractor deleteSnippetInteractor = new DeleteSnippetInteractor(deleteSnippetOutputBoundary, sqLiteDataAccessObject);
         DeleteSnippetController deleteSnippetController = new DeleteSnippetController(deleteSnippetInteractor, appContext);
         snippetsPaneView.setDeleteSnippetController(deleteSnippetController);
+        return this;
+    }
+
+    public AppBuilder addDeleteFolderUseCase() {
+        DeleteFolderOutputBoundary deleteFolderOutputBoundary = new DeleteFolderPresenter(foldersPaneViewModel);
+        DeleteFolderInteractor deleteFolderInteractor = new DeleteFolderInteractor(sqLiteDataAccessObject, deleteFolderOutputBoundary);
+        DeleteFolderController deleteFolderController = new DeleteFolderController(appContext, deleteFolderInteractor);
+        foldersPaneView.setDeleteFolderController(deleteFolderController);
         return this;
     }
 

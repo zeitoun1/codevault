@@ -189,6 +189,27 @@ public class SQLiteDataAccessObject implements SnippetRepository, FoldersReposit
         }
     }
 
+    @Override
+    public void deleteFolder(String selectedFolder) {
+        String folderTableQuery = "DELETE FROM " + foldersTable + " WHERE name=?";
+        String snippetsTableQuery = "DELETE FROM " + snippetsTable + " WHERE folder=?";
+
+        try(PreparedStatement folderStatement = connection.prepareStatement(folderTableQuery);
+            PreparedStatement snippetsStatement = connection.prepareStatement(snippetsTableQuery))
+        {
+            connection.setAutoCommit(false);
+            folderStatement.setString(1, selectedFolder);
+            snippetsStatement.setString(1, selectedFolder);
+
+            folderStatement.executeUpdate();
+            snippetsStatement.executeUpdate();
+            connection.commit();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     // Helper methods
 

@@ -2,6 +2,7 @@ package com.zeitoun.codevault.folder.view;
 
 import com.zeitoun.codevault.app.SceneManager;
 import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
+import com.zeitoun.codevault.folder.deletefolder.interfaceadapter.DeleteFolderController;
 import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderController;
 import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
 import com.zeitoun.codevault.shared.CustomListCell;
@@ -35,7 +36,10 @@ public class FoldersPaneView {
 
     private final ContextMenu contextMenu;
     private final Button renameButton;
+
     private final Button deleteButton;
+    private final ButtonType deleteConfirmationButton;
+    private final ButtonType cancelButton;
 
     private final FoldersPaneViewModel foldersPaneViewModel;
 
@@ -43,6 +47,8 @@ public class FoldersPaneView {
     private ShowFoldersController showFoldersController;
     private ShowSnippetsController showSnippetsController;
     private RenameFolderController renameFolderController;
+
+    private DeleteFolderController deleteFolderController;
 
     private final String name = "folders pane";
 
@@ -70,6 +76,8 @@ public class FoldersPaneView {
 
         this.renameButton = new Button("rename");
         this.deleteButton = new Button("delete");
+        this.deleteConfirmationButton = new ButtonType("Delete", ButtonBar.ButtonData.OK_DONE);
+        this.cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         this.contextMenu = new ContextMenu(new CustomMenuItem(renameButton), new CustomMenuItem(deleteButton));
         foldersPane.setContextMenu(contextMenu);
 
@@ -154,6 +162,23 @@ public class FoldersPaneView {
             }
         });
 
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete this folder", cancelButton, deleteConfirmationButton);
+                confirmation.setHeaderText("Delete");
+                confirmation.setResizable(false);
+                confirmation.showAndWait().ifPresent(buttonType -> {
+                    if(buttonType == deleteConfirmationButton) {
+                        deleteFolderController.deleteFolder(foldersPane.getSelectionModel().getSelectedIndex());
+                    } else {
+                        confirmation.close();
+                    }
+                });
+
+            }
+        });
+
 
 
     }
@@ -165,16 +190,20 @@ public class FoldersPaneView {
     public void setCreateFolderController(CreateFolderController createFolderController) {
         this.createFolderController = createFolderController;
     }
+
     public void setShowFoldersController(ShowFoldersController showFoldersController) {
         this.showFoldersController = showFoldersController;
     }
-
     public void setRenameFolderController(RenameFolderController renameFolderController) {
         this.renameFolderController = renameFolderController;
     }
 
     public void setShowSnippetsController(ShowSnippetsController showSnippetsController) {
         this.showSnippetsController = showSnippetsController;
+    }
+
+    public void setDeleteFolderController(DeleteFolderController deleteFolderController) {
+        this.deleteFolderController = deleteFolderController;
     }
 
 

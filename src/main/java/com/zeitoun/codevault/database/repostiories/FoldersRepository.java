@@ -7,4 +7,5 @@ public interface FoldersRepository {
     Boolean isMember(String name);
     List<String> getFolders();
     void renameFolder(String oldName, String newName);
+    void deleteFolder(String selectedFolder);
 }
