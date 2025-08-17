@@ -14,8 +14,15 @@ public class GetSnippetInteractor {
     }
 
     public void execute(String snippetName, String folderName) {
-        CodeSnippet snippet = snippetRepository.getSnippet(snippetName, folderName);
-        GetSnippetOutputData getSnippetOutputData = new GetSnippetOutputData(snippet.getName(), snippet.getCode(), snippet.getDescription(), snippet.getLanguage());
-        getSnippetOutputBoundary.loadSnippet(getSnippetOutputData);
+        // this happens when user selects a folder while already selecting a snippet
+        if (snippetName == null) {
+            GetSnippetOutputData getSnippetOutputData = new GetSnippetOutputData(null, "", null, null);
+            getSnippetOutputBoundary.loadSnippet(getSnippetOutputData);
+        } else {
+            CodeSnippet snippet = snippetRepository.getSnippet(snippetName, folderName);
+            GetSnippetOutputData getSnippetOutputData = new GetSnippetOutputData(snippet.getName(), snippet.getCode(), snippet.getDescription(), snippet.getLanguage());
+            getSnippetOutputBoundary.loadSnippet(getSnippetOutputData);
+        }
+
     }
 }

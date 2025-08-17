@@ -17,7 +17,6 @@ public class GetSnippetPresenter implements GetSnippetOutputBoundary {
         getSnippetViewModel.setCode(getSnippetOutputData.getCode());
         getSnippetViewModel.setDescription(getSnippetOutputData.getDescription());
         getSnippetViewModel.setLanguage(getSnippetOutputData.getLanguage());
-        // the view only listens to the name property as that is unique for every folder and it changes on selection
-        getSnippetViewModel.setName(getSnippetOutputData.getName());
+        getSnippetViewModel.nameProperty().setValue(getSnippetOutputData.getName());
     }
 }
