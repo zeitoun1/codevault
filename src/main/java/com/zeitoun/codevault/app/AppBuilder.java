@@ -159,7 +159,7 @@ public class AppBuilder {
         UpdateCodeSnippetInteractor updateCodeSnippetInteractor = new UpdateCodeSnippetInteractor(sqLiteDataAccessObject, updateCodeSnippetOutputBoundary);
 
         UpdateCodeSnippetController updateCodeSnippetController = new UpdateCodeSnippetController(updateCodeSnippetInteractor, appContext);
-        updateCodeSnippetView.setCreateCodeSnippetController(updateCodeSnippetController);
+        updateCodeSnippetView.setUpdateCodeSnippetController(updateCodeSnippetController);
         return this;
     }
 
