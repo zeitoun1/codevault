@@ -1,13 +1,17 @@
 package com.zeitoun.codevault.app;
 
-import com.zeitoun.codevault.folder.deletefolder.interfaceadapter.DeleteFolderController;
-import com.zeitoun.codevault.folder.deletefolder.interfaceadapter.DeleteFolderPresenter;
-import com.zeitoun.codevault.folder.deletefolder.usecase.DeleteFolderInteractor;
-import com.zeitoun.codevault.folder.deletefolder.usecase.DeleteFolderOutputBoundary;
-import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderController;
-import com.zeitoun.codevault.folder.renamefolder.interfaceadapter.RenameFolderPresenter;
-import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderInteractor;
-import com.zeitoun.codevault.folder.renamefolder.usecase.RenameFolderOutputBoundary;
+import com.zeitoun.codevault.folderspane.deletefolder.interfaceadapter.DeleteFolderController;
+import com.zeitoun.codevault.folderspane.deletefolder.interfaceadapter.DeleteFolderPresenter;
+import com.zeitoun.codevault.folderspane.deletefolder.usecase.DeleteFolderInteractor;
+import com.zeitoun.codevault.folderspane.deletefolder.usecase.DeleteFolderOutputBoundary;
+import com.zeitoun.codevault.folderspane.renamefolder.interfaceadapter.RenameFolderController;
+import com.zeitoun.codevault.folderspane.renamefolder.interfaceadapter.RenameFolderPresenter;
+import com.zeitoun.codevault.folderspane.renamefolder.usecase.RenameFolderInteractor;
+import com.zeitoun.codevault.folderspane.renamefolder.usecase.RenameFolderOutputBoundary;
+import com.zeitoun.codevault.settings.interfaceadapter.GithubSettingsController;
+import com.zeitoun.codevault.settings.interfaceadapter.GithubSettingsPresenter;
+import com.zeitoun.codevault.settings.usecase.GithubSettingsInteractor;
+import com.zeitoun.codevault.settings.usecase.GithubSettingsOutputBoundary;
 import com.zeitoun.codevault.snippetspane.addsnippet.interfaceadapter.AddSnippetController;
 import com.zeitoun.codevault.snippetspane.addsnippet.usecase.AddSnippetInteractor;
 import com.zeitoun.codevault.snippetspane.addsnippet.usecase.AddSnippetOutputBoundary;
@@ -25,16 +29,16 @@ import com.zeitoun.codevault.codesnippet.getsnippet.usecase.GetSnippetInteractor
 import com.zeitoun.codevault.codesnippet.getsnippet.usecase.GetSnippetOutputBoundary;
 import com.zeitoun.codevault.database.connection.SQLiteConnectionManager;
 import com.zeitoun.codevault.database.dao.SQLiteDataAccessObject;
-import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderController;
-import com.zeitoun.codevault.folder.createfolder.interfaceadapter.CreateFolderPresenter;
-import com.zeitoun.codevault.folder.createfolder.usecase.CreateFolderInteractor;
-import com.zeitoun.codevault.folder.createfolder.usecase.CreateFolderOutputBoundary;
-import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersController;
-import com.zeitoun.codevault.folder.showfolders.usecase.ShowFoldersInteractor;
-import com.zeitoun.codevault.folder.showfolders.usecase.ShowFoldersOutPutBoundary;
-import com.zeitoun.codevault.folder.showfolders.interfaceadapter.ShowFoldersPresenter;
-import com.zeitoun.codevault.folder.view.FoldersPaneView;
-import com.zeitoun.codevault.folder.view.FoldersPaneViewModel;
+import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderController;
+import com.zeitoun.codevault.folderspane.createfolder.interfaceadapter.CreateFolderPresenter;
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderInteractor;
+import com.zeitoun.codevault.folderspane.createfolder.usecase.CreateFolderOutputBoundary;
+import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersController;
+import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersInteractor;
+import com.zeitoun.codevault.folderspane.showfolders.usecase.ShowFoldersOutPutBoundary;
+import com.zeitoun.codevault.folderspane.showfolders.interfaceadapter.ShowFoldersPresenter;
+import com.zeitoun.codevault.folderspane.view.FoldersPaneView;
+import com.zeitoun.codevault.folderspane.view.FoldersPaneViewModel;
 import com.zeitoun.codevault.snippetspane.deletesnippet.interfaceadapter.DeleteSnippetController;
 import com.zeitoun.codevault.snippetspane.deletesnippet.interfaceadapter.DeleteSnippetPresenter;
 import com.zeitoun.codevault.snippetspane.deletesnippet.usecase.DeleteSnippetInteractor;
@@ -56,6 +60,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.util.Arrays;
 
@@ -211,10 +219,25 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addGithubSettingsUseCase() {
+        GithubSettingsOutputBoundary githubSettingsOutputBoundary = new GithubSettingsPresenter(updateCodeSnippetViewModel);
+        GithubSettingsInteractor githubSettingsInteractor = new GithubSettingsInteractor(githubSettingsOutputBoundary);
+        GithubSettingsController githubSettingsController = new GithubSettingsController(githubSettingsInteractor);
+        foldersPaneView.setGithubSettingsController(githubSettingsController);
+        return this;
+    }
 
+    // load app properties directory
+    public AppBuilder createAppDirectory() {
+        try {
+            Files.createDirectories(Path.of(System.getProperty("user.home") + File.separator + "codevault"));
+            return this;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // Loading the folders
-
     public AppBuilder loadFolders() {
         foldersPaneView.getShowFoldersController().execute();
         return this;

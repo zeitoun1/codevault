@@ -38,7 +38,9 @@ public class App extends Application {
                 .addRenameSnippetUseCase()
                 .addDeleteSnippetUseCase()
                 .addDeleteFolderUseCase()
+                .addGithubSettingsUseCase()
                 .loadFolders()
+                .createAppDirectory()
                 .build();
 
         primaryStage.setScene(scene);
